@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">SysAdmin Reminder</string>
-    <string name="tasks_item_name">Tasks</string>
-    <string name="new_task_item_name">New task</string>
-    <string name="tasks_history_item_name">History</string>
+    <string name="tasks_name">Tasks</string>
+    <string name="new_task_name">New task</string>
+    <string name="tasks_history_name">History</string>
+    <string name="tasks_code">tasks</string>
+    <string name="new_task_code">new_task</string>
+    <string name="tasks_history_code">tasks_history</string>
 </resources>

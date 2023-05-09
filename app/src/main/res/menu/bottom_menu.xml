@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/tasks"
-        android:title="@string/tasks_item_name"
+        android:title="@string/tasks_name"
         android:orderInCategory="1"
         android:icon="@drawable/ic_tasks_24"/>
     <item
         android:id="@+id/new_task"
-        android:title="@string/new_task_item_name"
+        android:title="@string/new_task_name"
         android:orderInCategory="2"
         android:icon="@drawable/ic_add_task_24"/>
     <item
         android:id="@+id/tasks_history"
-        android:title="@string/tasks_history_item_name"
+        android:title="@string/tasks_history_name"
         android:orderInCategory="3"
         android:icon="@drawable/ic_tasks_history_24"/>
 </menu>

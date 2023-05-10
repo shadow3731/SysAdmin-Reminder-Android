@@ -11,4 +11,6 @@
     <string name="priority_medium">Medium</string>
     <string name="priority_high">High</string>
     <string name="priority_critical">Critical</string>
+    <string name="refresh">Refresh</string>
+    <string name="settings">Settings</string>
 </resources>

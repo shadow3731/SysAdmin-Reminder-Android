@@ -6,4 +6,9 @@
     <string name="tasks_code">tasks</string>
     <string name="new_task_code">new_task</string>
     <string name="tasks_history_code">tasks_history</string>
+    <string name="priority_little">Little</string>
+    <string name="priority_low">Low</string>
+    <string name="priority_medium">Medium</string>
+    <string name="priority_high">High</string>
+    <string name="priority_critical">Critical</string>
 </resources>

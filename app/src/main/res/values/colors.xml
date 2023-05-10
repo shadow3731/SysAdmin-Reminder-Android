@@ -4,6 +4,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#FF0000FF</color>
     <color name="dark_grey">#403A3A</color>
+    <color name="yellow">#FFF200</color>
+    <color name="orange">#DC6D24</color>
+    <color name="red">#FF0000</color>
+    <color name="grey">#5CAA90</color>
 
     <color name="bnv_unchecked_item">#BAB3B1</color>
 </resources>

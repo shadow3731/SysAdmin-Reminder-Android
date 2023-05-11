@@ -13,11 +13,14 @@ import phovdewae.sysadminreminder.util.generateTask
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val taskAdapter = TaskAdapter()
+    private lateinit var cardViewActivity: CardViewActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        cardViewActivity = CardViewActivity(binding.cvNewTaskMain)
 
         changeActivityNameOrAddTask(binding.bnvMain.selectedItemId)
 
@@ -44,11 +47,13 @@ class MainActivity : AppCompatActivity() {
         when (itemId) {
             R.id.tasks -> setTitle(R.string.tasks_name)
             R.id.new_task -> {
-                binding.apply {
+                setTitle(R.string.new_task_name)
+                cardViewActivity.onCreate(binding, this)
+                /*binding.apply {
                     rvMain.layoutManager = LinearLayoutManager(this@MainActivity)
                     rvMain.adapter = taskAdapter
                     taskAdapter.addTask(generateTask())
-                }
+                }*/
             }
             R.id.tasks_history -> setTitle(R.string.tasks_history_name)
         }

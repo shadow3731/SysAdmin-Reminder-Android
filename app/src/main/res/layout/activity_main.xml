@@ -15,7 +15,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:background="@color/white"
-        android:visibility="gone"
+        android:visibility="visible"
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,15 +51,17 @@
                 android:layout_marginBottom="4dp"
                 android:autofillHints=""
                 android:ems="10"
+                android:gravity="start|top"
                 android:hint="@string/task_hint"
                 android:inputType="text"
+                android:padding="5dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey" />
 
             <EditText
                 android:id="@+id/et_new_task_exec"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="10dp"
@@ -68,8 +70,19 @@
                 android:ems="10"
                 android:hint="@string/proceed_at_hint"
                 android:inputType="datetime"
+                android:padding="5dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey" />
+
+            <Spinner
+                android:id="@+id/s_new_task_prior"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="4dp"
+                android:minHeight="48dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import phovdewae.sysadminreminder.databinding.ActivityMainBinding
 import phovdewae.sysadminreminder.tasks.TaskAdapter
+import phovdewae.sysadminreminder.util.getLinearBorder
+import phovdewae.sysadminreminder.util.getPriorities
 import phovdewae.sysadminreminder.view_activities.CardViewActivity
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +30,17 @@ class MainActivity : AppCompatActivity() {
             changeActivityNameOrAddTask(it.itemId)
             true
         }
+
+        binding.etNewTaskDesc.background = getLinearBorder()
+        binding.etNewTaskExec.background = getLinearBorder()
+
+        binding.sNewTaskPrior.adapter = ArrayAdapter(this,
+            android.R.layout.simple_spinner_dropdown_item,
+            getPriorities(this))
+        binding.sNewTaskPrior.background = getLinearBorder()
+
+        binding.bNewTaskCancel.background = getLinearBorder()
+        binding.bNewTaskAdd.background = getLinearBorder()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

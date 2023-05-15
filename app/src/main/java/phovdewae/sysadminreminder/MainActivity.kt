@@ -5,10 +5,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import phovdewae.sysadminreminder.databinding.ActivityMainBinding
 import phovdewae.sysadminreminder.tasks.TaskAdapter
-import phovdewae.sysadminreminder.util.generateTask
+import phovdewae.sysadminreminder.view_activities.CardViewActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -43,12 +42,11 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    private fun changeActivityNameOrAddTask(itemId: Int) {
+    fun changeActivityNameOrAddTask(itemId: Int) {
         when (itemId) {
             R.id.tasks -> setTitle(R.string.tasks_name)
             R.id.new_task -> {
-                setTitle(R.string.new_task_name)
-                cardViewActivity.onCreate(binding, this)
+                cardViewActivity.onCreate(binding, this@MainActivity)
                 /*binding.apply {
                     rvMain.layoutManager = LinearLayoutManager(this@MainActivity)
                     rvMain.adapter = taskAdapter

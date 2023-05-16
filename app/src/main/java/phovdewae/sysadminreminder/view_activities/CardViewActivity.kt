@@ -14,7 +14,9 @@ import phovdewae.sysadminreminder.databinding.ActivityMainBinding
 import phovdewae.sysadminreminder.util.disable
 import phovdewae.sysadminreminder.util.enable
 import phovdewae.sysadminreminder.util.getPriorities
-import phovdewae.sysadminreminder.util.setDefault
+import phovdewae.sysadminreminder.util.lastState
+import phovdewae.sysadminreminder.util.prepareForDateTime
+import phovdewae.sysadminreminder.util.move
 
 class CardViewActivity(private val cardView: CardView) {
 
@@ -44,16 +46,34 @@ class CardViewActivity(private val cardView: CardView) {
             clInnerMain.disable()
             bnvMain.disable()
 
+            etNewTaskExecDate.prepareForDateTime(mainActivity, true)
+            etNewTaskExecTime.prepareForDateTime(mainActivity, false)
+
             val adapter = SpinnerAdapter(mainActivity, getPriorities(mainActivity))
             sNewTaskPrior.adapter = adapter
 
             bNewTaskCancel.setOnClickListener {
-                cardView.visibility = View.GONE
-
-                clInnerMain.enable()
-                bnvMain.enable(mainActivity)
-                bnvMain.setDefault(mainActivity)
+                close(this, mainActivity)
+                bnvMain.move(false, mainActivity)
             }
+
+            bNewTaskAdd.setOnClickListener {
+                close(this, mainActivity)
+                bnvMain.move(true, mainActivity)
+            }
+        }
+    }
+
+    private fun close(binding: ActivityMainBinding, mainActivity: MainActivity) {
+        binding.apply {
+            cardView.visibility = View.GONE
+
+            etNewTaskDesc.text.clear()
+            etNewTaskExecDate.text.clear()
+            etNewTaskExecTime.text.clear()
+
+            clInnerMain.enable()
+            bnvMain.enable(mainActivity)
         }
     }
 }

@@ -7,6 +7,8 @@ import java.util.Date
 import java.util.Locale
 
 var counter = 0
+var datePattern = "dd.MM.yyyy"
+var timePattern = "HH:mm"
 //fun generateTask(): Task {
 //    return Task((++counter).toLong(),
 //        "Description $counter",
@@ -14,8 +16,8 @@ var counter = 0
 //        priorities[Random().nextInt(priorities.size)])
 //}
 
-fun getFormattedDate(date: Date): String {
-    val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+fun getFormattedDateTime(date: Date): String {
+    val dateFormat = SimpleDateFormat("$datePattern $timePattern", Locale.getDefault())
     return dateFormat.format(date)
 }
 

@@ -14,7 +14,6 @@ import phovdewae.sysadminreminder.databinding.ActivityMainBinding
 import phovdewae.sysadminreminder.util.disable
 import phovdewae.sysadminreminder.util.enable
 import phovdewae.sysadminreminder.util.getPriorities
-import phovdewae.sysadminreminder.util.makeLinearBorder
 import phovdewae.sysadminreminder.util.setDefault
 
 class CardViewActivity(private val cardView: CardView) {
@@ -46,12 +45,7 @@ class CardViewActivity(private val cardView: CardView) {
             bnvMain.disable()
 
             val adapter = SpinnerAdapter(mainActivity, getPriorities(mainActivity))
-            //adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
             sNewTaskPrior.adapter = adapter
-
-            etNewTaskDesc.setOnClickListener {
-                makeLinearBorder(it)
-            }
 
             bNewTaskCancel.setOnClickListener {
                 cardView.visibility = View.GONE

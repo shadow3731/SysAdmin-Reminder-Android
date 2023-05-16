@@ -15,7 +15,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:background="@color/white"
-        android:visibility="visible"
+        android:visibility="gone"
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,6 +45,7 @@
                 android:id="@+id/et_new_task_desc"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:background="@drawable/linear_border"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="10dp"
@@ -62,6 +63,7 @@
                 android:id="@+id/et_new_task_exec"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:background="@drawable/linear_border"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="10dp"
@@ -74,15 +76,37 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey" />
 
-            <Spinner
-                android:id="@+id/s_new_task_prior"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="4dp"
-                android:minHeight="48dp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_new_task_prior_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|start"
+                    android:text="@string/priority_title"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/s_new_task_prior"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/linear_border"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_weight="1"
+                    android:minHeight="48dp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,9 +122,9 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/linear_border"
                     android:layout_marginEnd="3dp"
                     android:layout_weight="1"
-                    android:background="#00FFFFFF"
                     android:text="@android:string/cancel"
                     android:textAllCaps="false"
                     android:textColor="@color/black"
@@ -111,9 +135,9 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/linear_border"
                     android:layout_marginStart="3dp"
                     android:layout_weight="1"
-                    android:background="#00FFFFFF"
                     android:text="@string/add_new_task"
                     android:textAllCaps="false"
                     android:textColor="@color/black"

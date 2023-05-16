@@ -1,21 +1,9 @@
 package phovdewae.sysadminreminder.util
 
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import phovdewae.sysadminreminder.MainActivity
 import phovdewae.sysadminreminder.R
-
-fun getLinearBorder(): GradientDrawable {
-    val shape = GradientDrawable()
-    shape.shape = GradientDrawable.RECTANGLE
-    shape.setStroke(2, Color.BLACK)
-    shape.setColor(Color.TRANSPARENT)
-    shape.cornerRadius = 15F
-
-    return shape
-}
 
 fun View.enable() {
     isEnabled = true

@@ -2,13 +2,14 @@ package phovdewae.sysadminreminder.view_activities
 
 import android.content.Context
 import android.graphics.Color
-import androidx.constraintlayout.widget.R
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import phovdewae.sysadminreminder.MainActivity
+import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.ActivityMainBinding
 import phovdewae.sysadminreminder.util.disable
 import phovdewae.sysadminreminder.util.enable
@@ -19,10 +20,12 @@ import phovdewae.sysadminreminder.util.setDefault
 class CardViewActivity(private val cardView: CardView) {
 
     class SpinnerAdapter(context: Context, items: Array<String>):
-        ArrayAdapter<String>(context, R.layout.support_simple_spinner_dropdown_item, items) {
+        ArrayAdapter<String>(context,
+            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+            items) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val view = super.getView(position, convertView, parent)
-                view.setBackgroundColor(Color.WHITE)
+                view.background = ContextCompat.getDrawable(context, R.drawable.spinner_background)
                 (view as TextView).setTextColor(Color.BLACK)
                 return view
             }
@@ -43,7 +46,7 @@ class CardViewActivity(private val cardView: CardView) {
             bnvMain.disable()
 
             val adapter = SpinnerAdapter(mainActivity, getPriorities(mainActivity))
-            adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+            //adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
             sNewTaskPrior.adapter = adapter
 
             etNewTaskDesc.setOnClickListener {

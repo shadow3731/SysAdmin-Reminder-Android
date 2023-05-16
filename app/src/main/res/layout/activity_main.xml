@@ -45,36 +45,38 @@
                 android:id="@+id/et_new_task_desc"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:background="@drawable/linear_border"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="4dp"
                 android:autofillHints=""
+                android:background="@drawable/background"
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="@string/task_hint"
                 android:inputType="text"
                 android:padding="5dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/grey" />
+                android:textColorHint="@color/grey"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/et_new_task_exec"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/linear_border"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="4dp"
                 android:autofillHints=""
+                android:background="@drawable/background"
                 android:ems="10"
                 android:hint="@string/proceed_at_hint"
                 android:inputType="datetime"
                 android:padding="5dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/grey" />
+                android:textColorHint="@color/grey"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -93,18 +95,19 @@
                     android:gravity="center|start"
                     android:text="@string/priority_title"
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <Spinner
                     android:id="@+id/s_new_task_prior"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/linear_border"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="4dp"
                     android:layout_weight="1"
+                    android:background="@drawable/spinner_background"
+                    android:gravity="center|end"
                     android:minHeight="48dp" />
             </LinearLayout>
 
@@ -122,9 +125,9 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/linear_border"
                     android:layout_marginEnd="3dp"
                     android:layout_weight="1"
+                    android:background="@drawable/background"
                     android:text="@android:string/cancel"
                     android:textAllCaps="false"
                     android:textColor="@color/black"
@@ -135,9 +138,9 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/linear_border"
                     android:layout_marginStart="3dp"
                     android:layout_weight="1"
+                    android:background="@drawable/background"
                     android:text="@string/add_new_task"
                     android:textAllCaps="false"
                     android:textColor="@color/black"

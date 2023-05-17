@@ -5,6 +5,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.view.View
 import android.widget.EditText
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import phovdewae.sysadminreminder.MainActivity
 import phovdewae.sysadminreminder.R
@@ -26,6 +27,14 @@ fun View.disable() {
     isClickable = false
     isFocusable = false
     alpha = 0.5F
+}
+
+fun RecyclerView.enable() {
+
+}
+
+fun RecyclerView.disable() {
+
 }
 
 fun BottomNavigationView.enable(mainActivity: MainActivity) {

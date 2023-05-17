@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                 lastState = R.id.tasks
             }
             R.id.new_task -> {
-                cardViewActivity.onCreate(binding, this@MainActivity)
+                cardViewActivity.onCreate(binding, this@MainActivity, taskAdapter)
                 /*binding.apply {
                     rvMain.layoutManager = LinearLayoutManager(this@MainActivity)
                     rvMain.adapter = taskAdapter

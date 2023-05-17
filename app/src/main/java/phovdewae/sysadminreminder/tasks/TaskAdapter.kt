@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.TaskItemBinding
-import phovdewae.sysadminreminder.util.getFormattedDateTime
+import phovdewae.sysadminreminder.util.dateTimeToString
 import phovdewae.sysadminreminder.util.makeLinearBorder
 
 class TaskAdapter: RecyclerView.Adapter<TaskAdapter.TaskHolder>() {
@@ -20,7 +20,7 @@ class TaskAdapter: RecyclerView.Adapter<TaskAdapter.TaskHolder>() {
         fun bind(task: Task) = with(binding) {
             tvId.text = task.id.toString()
             tvDescription.text = task.description
-            tvExecutionTime.text = getFormattedDateTime(task.executionTime)
+            tvExecutionTime.text = dateTimeToString(task.executionTime)
             tvPriority.text = task.priority
 
             makeLinearBorder(cvTaskField)

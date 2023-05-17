@@ -2,6 +2,7 @@ package phovdewae.sysadminreminder.util
 
 import android.content.Context
 import phovdewae.sysadminreminder.R
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -9,16 +10,17 @@ import java.util.Locale
 var counter = 0
 var datePattern = "dd.MM.yyyy"
 var timePattern = "HH:mm"
-//fun generateTask(): Task {
-//    return Task((++counter).toLong(),
-//        "Description $counter",
-//        Date(),
-//        priorities[Random().nextInt(priorities.size)])
-//}
 
-fun getFormattedDateTime(date: Date): String {
-    val dateFormat = SimpleDateFormat("$datePattern $timePattern", Locale.getDefault())
-    return dateFormat.format(date)
+fun dateTimeToString(srcDateTime: Date): String {
+    val dateTimeFormat = SimpleDateFormat("$datePattern $timePattern", Locale.getDefault())
+    return dateTimeFormat.format(srcDateTime)
+}
+
+fun stringToDateTime(srcDate: String, srcTime: String): Date {
+    val dateTimeFormat = SimpleDateFormat("$datePattern $timePattern", Locale.getDefault())
+    dateTimeFormat.isLenient = false
+    return dateTimeFormat.parse("$srcDate $srcTime")!!
+
 }
 
 fun getPriorities(context: Context): Array<String> {
@@ -27,4 +29,18 @@ fun getPriorities(context: Context): Array<String> {
         context.getString(R.string.priority_medium),
         context.getString(R.string.priority_high),
         context.getString(R.string.priority_critical))
+}
+
+fun isValid(description: String, date: String, time: String): Boolean {
+    if (description.isEmpty()) return false
+
+    val dateTimeFormat = SimpleDateFormat("$datePattern $timePattern", Locale.getDefault())
+    dateTimeFormat.isLenient = false
+    try {
+        dateTimeFormat.parse("$date $time")
+    } catch (e: Exception) {
+        return false
+    }
+
+    return true
 }

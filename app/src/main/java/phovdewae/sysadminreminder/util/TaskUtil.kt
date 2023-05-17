@@ -16,6 +16,16 @@ fun dateTimeToString(srcDateTime: Date): String {
     return dateTimeFormat.format(srcDateTime)
 }
 
+fun dateToString(srcDate: Date): String {
+    val dateTimeFormat = SimpleDateFormat(datePattern, Locale.getDefault())
+    return dateTimeFormat.format(srcDate)
+}
+
+fun timeToString(srcTime: Date): String {
+    val dateTimeFormat = SimpleDateFormat(timePattern, Locale.getDefault())
+    return dateTimeFormat.format(srcTime)
+}
+
 fun stringToDateTime(srcDate: String, srcTime: String): Date {
     val dateTimeFormat = SimpleDateFormat("$datePattern $timePattern", Locale.getDefault())
     dateTimeFormat.isLenient = false
@@ -29,6 +39,11 @@ fun getPriorities(context: Context): Array<String> {
         context.getString(R.string.priority_medium),
         context.getString(R.string.priority_high),
         context.getString(R.string.priority_critical))
+}
+
+fun definePriorityId(context: Context, priority: String): Int {
+    val index = getPriorities(context).indexOf(priority)
+    return if (index > -1) index else 0
 }
 
 fun isValid(description: String, date: String, time: String): Boolean {

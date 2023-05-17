@@ -1,23 +1,24 @@
 package phovdewae.sysadminreminder.tasks
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import phovdewae.sysadminreminder.MainActivity
 import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.TaskItemBinding
 import phovdewae.sysadminreminder.util.dateTimeToString
 import phovdewae.sysadminreminder.util.makeLinearBorder
 
-class TaskAdapter(private val context: Context): RecyclerView.Adapter<TaskAdapter.TaskHolder>() {
+class TaskAdapter(private val mainActivity: MainActivity):
+    RecyclerView.Adapter<TaskAdapter.TaskHolder>() {
 
     private val taskList = ArrayList<Task>()
 
-    class TaskHolder(item: View): RecyclerView.ViewHolder(item) {
+    inner class TaskHolder(item: View): RecyclerView.ViewHolder(item) {
 
         private val binding = TaskItemBinding.bind(item)
 
@@ -47,11 +48,18 @@ class TaskAdapter(private val context: Context): RecyclerView.Adapter<TaskAdapte
         holder.bind(taskList[position])
 
         holder.itemView.setOnLongClickListener {
-            val popupMenu = PopupMenu(context, it, Gravity.END)
+            val popupMenu = PopupMenu(mainActivity, it, Gravity.END)
             popupMenu.inflate(R.menu.popup_menu)
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
-                    R.id.edit_task_popup -> Toast.makeText(context, R.string.edit_task_menu, Toast.LENGTH_SHORT).show()
+                    R.id.edit_task_popup -> mainActivity.cardViewActivity
+                        .onChange(
+                            taskList[position],
+                            mainActivity.binding,
+                            mainActivity,
+                            mainActivity.bottomNavigationViewActivity,
+                            this
+                        )
                     R.id.delete_task_popup -> deleteTask(position)
                 }
                 true
@@ -66,8 +74,14 @@ class TaskAdapter(private val context: Context): RecyclerView.Adapter<TaskAdapte
         notifyItemInserted(taskList.indexOf(task))
     }
 
+    fun editTask(task: Task) {
+        notifyItemChanged(taskList.indexOf(taskList.find { it.id == task.id }))
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
     private fun deleteTask(position: Int) {
         taskList.removeAt(position)
         notifyItemRemoved(position)
+        notifyDataSetChanged()
     }
 }

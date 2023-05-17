@@ -40,12 +40,12 @@ class BottomNavigationViewActivity(private val bottomNavigationView: BottomNavig
                 lastState = R.id.tasks
             }
             R.id.new_task -> {
-                cardViewActivity.onCreate(binding, mainActivity, this, taskAdapter)
-                /*binding.apply {
-                    rvMain.layoutManager = LinearLayoutManager(this@MainActivity)
-                    rvMain.adapter = taskAdapter
-                    taskAdapter.addTask(generateTask())
-                }*/
+                cardViewActivity.onCreate(
+                    binding,
+                    mainActivity,
+                    this,
+                    taskAdapter
+                )
             }
             R.id.tasks_history -> {
                 mainActivity.title = mainActivity.getString(R.string.tasks_history_name)

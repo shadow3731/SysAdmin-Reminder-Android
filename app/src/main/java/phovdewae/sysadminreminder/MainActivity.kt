@@ -9,14 +9,12 @@ import phovdewae.sysadminreminder.databinding.ActivityMainBinding
 import phovdewae.sysadminreminder.tasks.TaskAdapter
 import phovdewae.sysadminreminder.view_activities.BottomNavigationViewActivity
 import phovdewae.sysadminreminder.view_activities.CardViewActivity
-import phovdewae.sysadminreminder.view_activities.RecyclerViewActivity
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     private val taskAdapter = TaskAdapter(this)
-    private lateinit var cardViewActivity: CardViewActivity
-    private lateinit var recyclerViewActivity: RecyclerViewActivity
-    private lateinit var bottomNavigationViewActivity: BottomNavigationViewActivity
+    lateinit var cardViewActivity: CardViewActivity
+    lateinit var bottomNavigationViewActivity: BottomNavigationViewActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,13 +23,14 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply {
             cardViewActivity = CardViewActivity(cvNewTaskMain)
-            recyclerViewActivity = RecyclerViewActivity(rvMain)
             bottomNavigationViewActivity = BottomNavigationViewActivity(bnvMain)
 
-            bottomNavigationViewActivity.onCreate(binding,
+            bottomNavigationViewActivity.onCreate(
+                binding,
                 this@MainActivity,
                 cardViewActivity,
-                taskAdapter)
+                taskAdapter
+            )
         }
     }
 

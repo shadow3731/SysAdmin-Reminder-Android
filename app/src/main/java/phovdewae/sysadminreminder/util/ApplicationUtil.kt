@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -33,6 +34,11 @@ fun View.disable() {
     alpha = 0.5F
 }
 
+fun View.hideKeyboard(context: Context) {
+    val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+}
+
 fun RecyclerView.enable(taskAdapter: TaskAdapter) {
     isEnabled = true
     adapter = taskAdapter
@@ -48,7 +54,8 @@ fun BottomNavigationView.enable(
     binding: ActivityMainBinding,
     mainActivity: MainActivity,
     cardViewActivity: CardViewActivity,
-    taskAdapter: TaskAdapter) {
+    taskAdapter: TaskAdapter
+) {
     setOnItemSelectedListener {
         bottomNavigationViewActivity
             .changeMainActivityNameOrAddTask(

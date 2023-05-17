@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/edit_task_popup"
+        android:title="@string/edit_task_menu" />
+    <item
+        android:id="@+id/delete_task_popup"
+        android:title="@string/delete_task_menu" />
+</menu>

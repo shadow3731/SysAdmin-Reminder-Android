@@ -2,6 +2,7 @@
     <string name="app_name">SysAdmin Reminder</string>
     <string name="tasks_name">Tasks</string>
     <string name="new_task_name">New task</string>
+    <string name="edit_task_name">Edit task</string>
     <string name="tasks_history_name">History</string>
     <string name="tasks_code">tasks</string>
     <string name="new_task_code">new_task</string>
@@ -20,6 +21,9 @@
     <string name="priority_hint">Priority</string>
     <string name="priority_title">Select a priority</string>
     <string name="add_new_task">Add</string>
+    <string name="edit_task">Edit</string>
     <string name="cancel_new_task">Cancel</string>
     <string name="invalid_data">Invalid data</string>
+    <string name="edit_task_menu">Edit</string>
+    <string name="delete_task_menu">Delete</string>
 </resources>

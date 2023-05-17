@@ -61,12 +61,17 @@ class CardViewActivity(private val cardView: CardView) {
 
     }
 
-    fun onCreate(binding: ActivityMainBinding, mainActivity: MainActivity, taskAdapter: TaskAdapter) {
+    fun onCreate(
+        binding: ActivityMainBinding,
+        mainActivity: MainActivity,
+        bottomNavigationViewActivity: BottomNavigationViewActivity,
+        taskAdapter: TaskAdapter) {
         cardView.visibility = View.VISIBLE
 
 
         binding.apply {
             clInnerMain.disable()
+            rvMain.disable(taskAdapter)
             bnvMain.disable()
 
             etNewTaskExecDate.prepareForDateTime(mainActivity, true)
@@ -78,7 +83,7 @@ class CardViewActivity(private val cardView: CardView) {
             sNewTaskPrior.onItemSelectedListener = spinnerListener
 
             bNewTaskCancel.setOnClickListener {
-                close(this, mainActivity)
+                close(this, mainActivity, bottomNavigationViewActivity, taskAdapter)
                 bnvMain.move(false, mainActivity)
             }
 
@@ -95,7 +100,7 @@ class CardViewActivity(private val cardView: CardView) {
                     rvMain.adapter = taskAdapter
                     taskAdapter.addTask(task)
 
-                    close(this, mainActivity)
+                    close(this, mainActivity, bottomNavigationViewActivity, taskAdapter)
                     bnvMain.move(true, mainActivity)
                 } else {
                     Toast.makeText(mainActivity, R.string.invalid_data, Toast.LENGTH_SHORT).show()
@@ -104,7 +109,11 @@ class CardViewActivity(private val cardView: CardView) {
         }
     }
 
-    private fun close(binding: ActivityMainBinding, mainActivity: MainActivity) {
+    private fun close(
+        binding: ActivityMainBinding,
+        mainActivity: MainActivity,
+        bottomNavigationViewActivity: BottomNavigationViewActivity,
+        taskAdapter: TaskAdapter) {
         binding.apply {
             cardView.visibility = View.GONE
 
@@ -113,7 +122,13 @@ class CardViewActivity(private val cardView: CardView) {
             etNewTaskExecTime.text.clear()
 
             clInnerMain.enable()
-            bnvMain.enable(mainActivity)
+            rvMain.enable(taskAdapter)
+            bnvMain.enable(
+                bottomNavigationViewActivity,
+                binding,
+                mainActivity,
+                this@CardViewActivity,
+                taskAdapter)
         }
     }
 }

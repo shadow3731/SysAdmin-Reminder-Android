@@ -9,6 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import phovdewae.sysadminreminder.MainActivity
 import phovdewae.sysadminreminder.R
+import phovdewae.sysadminreminder.databinding.ActivityMainBinding
+import phovdewae.sysadminreminder.tasks.TaskAdapter
+import phovdewae.sysadminreminder.view_activities.BottomNavigationViewActivity
+import phovdewae.sysadminreminder.view_activities.CardViewActivity
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -29,17 +33,30 @@ fun View.disable() {
     alpha = 0.5F
 }
 
-fun RecyclerView.enable() {
-
+fun RecyclerView.enable(taskAdapter: TaskAdapter) {
+    isEnabled = true
+    adapter = taskAdapter
 }
 
-fun RecyclerView.disable() {
-
+fun RecyclerView.disable(taskAdapter: TaskAdapter) {
+    isEnabled = false
+    adapter = taskAdapter
 }
 
-fun BottomNavigationView.enable(mainActivity: MainActivity) {
+fun BottomNavigationView.enable(
+    bottomNavigationViewActivity: BottomNavigationViewActivity,
+    binding: ActivityMainBinding,
+    mainActivity: MainActivity,
+    cardViewActivity: CardViewActivity,
+    taskAdapter: TaskAdapter) {
     setOnItemSelectedListener {
-        mainActivity.changeActivityNameOrAddTask(it.itemId)
+        bottomNavigationViewActivity
+            .changeMainActivityNameOrAddTask(
+                binding,
+                mainActivity,
+                cardViewActivity,
+                taskAdapter,
+                it.itemId)
         true
     }
     for (i in 0 until menu.size()) {

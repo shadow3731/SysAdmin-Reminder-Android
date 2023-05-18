@@ -10,25 +10,28 @@ import androidx.recyclerview.widget.RecyclerView
 import phovdewae.sysadminreminder.MainActivity
 import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.TaskItemBinding
+import phovdewae.sysadminreminder.timers.TaskTimerPerformer
 import phovdewae.sysadminreminder.util.dateTimeToString
-import phovdewae.sysadminreminder.util.makeLinearBorder
+import phovdewae.sysadminreminder.util.makeBackground
 
 class TaskAdapter(private val mainActivity: MainActivity):
     RecyclerView.Adapter<TaskAdapter.TaskHolder>() {
 
+    private val taskTimerPerformer = TaskTimerPerformer()
     private val taskList = ArrayList<Task>()
 
     inner class TaskHolder(item: View): RecyclerView.ViewHolder(item) {
 
-        private val binding = TaskItemBinding.bind(item)
+        private val holderBinding = TaskItemBinding.bind(item)
 
-        fun bind(task: Task) = with(binding) {
+        fun bind(task: Task) = with(holderBinding) {
             tvId.text = task.id.toString()
             tvDescription.text = task.description
             tvExecutionTime.text = dateTimeToString(task.executionTime)
             tvPriority.text = task.priority
 
-            makeLinearBorder(cvTaskField)
+            makeBackground(taskTimerPerformer.getColor(task.executionTime), cvTaskField)
+            taskTimerPerformer.addTimers(null, task.executionTime, cvTaskField)
         }
     }
 
@@ -75,12 +78,15 @@ class TaskAdapter(private val mainActivity: MainActivity):
     }
 
     fun editTask(task: Task) {
-        notifyItemChanged(taskList.indexOf(taskList.find { it.id == task.id }))
+        val position = taskList.indexOf(taskList.find { it.id == task.id })
+        taskTimerPerformer.editTimers(position, task.executionTime)
+        notifyItemChanged(position)
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun deleteTask(position: Int) {
         taskList.removeAt(position)
+        taskTimerPerformer.deleteTimers(position, false)
         notifyItemRemoved(position)
         notifyDataSetChanged()
     }

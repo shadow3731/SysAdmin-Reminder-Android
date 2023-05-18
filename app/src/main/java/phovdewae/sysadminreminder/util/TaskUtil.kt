@@ -34,11 +34,7 @@ fun stringToDateTime(srcDate: String, srcTime: String): Date {
 }
 
 fun getPriorities(context: Context): Array<String> {
-    return arrayOf(context.getString(R.string.priority_little),
-        context.getString(R.string.priority_low),
-        context.getString(R.string.priority_medium),
-        context.getString(R.string.priority_high),
-        context.getString(R.string.priority_critical))
+    return context.resources.getStringArray(R.array.priorities)
 }
 
 fun definePriorityId(context: Context, priority: String): Int {

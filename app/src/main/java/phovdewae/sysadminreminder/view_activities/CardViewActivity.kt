@@ -78,17 +78,17 @@ class CardViewActivity(private val cardView: CardView) {
             tvNewTaskTitle.text = mainActivity.getString(R.string.new_task_name)
 
             val spinnerListener = SpinnerOnItemSelectedListener()
-            sNewTaskPrior.onItemSelectedListener = spinnerListener
+            sTaskPrior.onItemSelectedListener = spinnerListener
 
-            bNewTaskAdd.text = mainActivity.getText(R.string.add_new_task)
+            bTaskAddEdit.text = mainActivity.getText(R.string.add_new_task)
 
-            bNewTaskAdd.setOnClickListener {
-                if (isValid(etNewTaskDesc.text.toString(),
-                        etNewTaskExecDate.text.toString(),
-                        etNewTaskExecTime.text.toString())) {
+            bTaskAddEdit.setOnClickListener {
+                if (isValid(etTaskDesc.text.toString(),
+                        etTaskExecDate.text.toString(),
+                        etTaskExecTime.text.toString())) {
                     val task = Task((++counter).toLong(),
-                        etNewTaskDesc.text.toString(),
-                        stringToDateTime(etNewTaskExecDate.text.toString(), etNewTaskExecTime.text.toString()),
+                        etTaskDesc.text.toString(),
+                        stringToDateTime(etTaskExecDate.text.toString(), etTaskExecTime.text.toString()),
                         spinnerListener.selectedPriority
                     )
                     rvMain.layoutManager = LinearLayoutManager(mainActivity)
@@ -116,28 +116,28 @@ class CardViewActivity(private val cardView: CardView) {
         binding.apply {
             tvNewTaskTitle.text = mainActivity.getString(R.string.edit_task_name)
 
-            etNewTaskDesc.text = Editable.Factory.getInstance()
+            etTaskDesc.text = Editable.Factory.getInstance()
                 .newEditable(task.description)
-            etNewTaskExecDate.text = Editable.Factory.getInstance()
+            etTaskExecDate.text = Editable.Factory.getInstance()
                 .newEditable(dateToString(task.executionTime))
-            etNewTaskExecTime.text = Editable.Factory.getInstance()
+            etTaskExecTime.text = Editable.Factory.getInstance()
                 .newEditable(timeToString(task.executionTime))
 
             val spinnerListener = SpinnerOnItemSelectedListener()
-            sNewTaskPrior.onItemSelectedListener = spinnerListener
-            sNewTaskPrior.setSelection(definePriorityId(mainActivity, task.priority))
+            sTaskPrior.onItemSelectedListener = spinnerListener
+            sTaskPrior.setSelection(definePriorityId(mainActivity, task.priority))
 
-            bNewTaskAdd.text = mainActivity.getText(R.string.edit_task)
+            bTaskAddEdit.text = mainActivity.getText(R.string.edit_task)
 
-            bNewTaskAdd.setOnClickListener {
-                if (isValid(etNewTaskDesc.text.toString(),
-                        etNewTaskExecDate.text.toString(),
-                        etNewTaskExecTime.text.toString())
+            bTaskAddEdit.setOnClickListener {
+                if (isValid(etTaskDesc.text.toString(),
+                        etTaskExecDate.text.toString(),
+                        etTaskExecTime.text.toString())
                 ) {
-                    task.description = etNewTaskDesc.text.toString()
+                    task.description = etTaskDesc.text.toString()
                     task.executionTime = stringToDateTime(
-                        etNewTaskExecDate.text.toString(),
-                        etNewTaskExecTime.text.toString()
+                        etTaskExecDate.text.toString(),
+                        etTaskExecTime.text.toString()
                     )
                     task.priority = spinnerListener.selectedPriority
 
@@ -167,13 +167,13 @@ class CardViewActivity(private val cardView: CardView) {
             rvMain.disable(taskAdapter)
             bnvMain.disable()
 
-            etNewTaskExecDate.prepareForDateTime(mainActivity, true)
-            etNewTaskExecTime.prepareForDateTime(mainActivity, false)
+            etTaskExecDate.prepareForDateTime(mainActivity, true)
+            etTaskExecTime.prepareForDateTime(mainActivity, false)
 
             val spinnerAdapter = SpinnerAdapter(mainActivity, getPriorities(mainActivity))
-            sNewTaskPrior.adapter = spinnerAdapter
+            sTaskPrior.adapter = spinnerAdapter
 
-            bNewTaskCancel.setOnClickListener {
+            bTaskCancel.setOnClickListener {
                 close(this, mainActivity, bottomNavigationViewActivity, taskAdapter)
                 bnvMain.move(false, mainActivity)
             }
@@ -190,9 +190,9 @@ class CardViewActivity(private val cardView: CardView) {
             cardView.visibility = View.GONE
             cardView.hideKeyboard(mainActivity)
 
-            etNewTaskDesc.text.clear()
-            etNewTaskExecDate.text.clear()
-            etNewTaskExecTime.text.clear()
+            etTaskDesc.text.clear()
+            etTaskExecDate.text.clear()
+            etTaskExecTime.text.clear()
 
             clInnerMain.enable()
             rvMain.enable(taskAdapter)

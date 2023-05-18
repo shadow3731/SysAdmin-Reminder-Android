@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.apply {
-            cardViewActivity = CardViewActivity(cvNewTaskMain)
+            cardViewActivity = CardViewActivity(cvTaskMain)
             bottomNavigationViewActivity = BottomNavigationViewActivity(bnvMain)
 
             bottomNavigationViewActivity.onCreate(

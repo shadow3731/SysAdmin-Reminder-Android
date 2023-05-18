@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="edit_task_menu">Edit</string>
+    <string name="delete_task_menu">Delete</string>
+</resources>

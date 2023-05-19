@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="active_task">Active</string>
+    <string name="finished_task">Finished</string>
+    <string name="cancelled_task">Cancelled</string>
+</resources>

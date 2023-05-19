@@ -1,4 +1,4 @@
-package phovdewae.sysadminreminder.util
+package app.phovdewae.sysadminreminder.util
 
 import android.content.Context
 import phovdewae.sysadminreminder.R

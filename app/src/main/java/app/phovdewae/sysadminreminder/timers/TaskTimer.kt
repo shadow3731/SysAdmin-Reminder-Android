@@ -1,4 +1,4 @@
-package phovdewae.sysadminreminder.timers
+package app.phovdewae.sysadminreminder.timers
 
 data class TaskTimer(
     var duration: Long,

@@ -1,4 +1,4 @@
-package phovdewae.sysadminreminder.tasks
+package app.phovdewae.sysadminreminder.tasks
 
 import android.annotation.SuppressLint
 import android.view.Gravity
@@ -7,14 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import phovdewae.sysadminreminder.MainActivity
+import app.phovdewae.sysadminreminder.MainActivity
+import app.phovdewae.sysadminreminder.timers.TaskTimerPerformer
+import app.phovdewae.sysadminreminder.util.dateTimeToString
+import app.phovdewae.sysadminreminder.util.makeBackground
 import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.TaskItemBinding
-import phovdewae.sysadminreminder.timers.TaskTimerPerformer
-import phovdewae.sysadminreminder.util.dateTimeToString
-import phovdewae.sysadminreminder.util.makeBackground
 
-class TaskAdapter(private val mainActivity: MainActivity):
+class TaskAdapter(private val mainActivity: MainActivity, private val taskCloud: TaskCloud):
     RecyclerView.Adapter<TaskAdapter.TaskHolder>() {
 
     private val taskTimerPerformer = TaskTimerPerformer()
@@ -74,7 +74,13 @@ class TaskAdapter(private val mainActivity: MainActivity):
 
     fun addTask(task: Task) {
         taskList.add(task)
-        notifyItemInserted(taskList.indexOf(task))
+        if (taskCloud.saveTasksToFile(taskList, mainActivity)) {
+            notifyItemInserted(taskList.indexOf(task))
+        }
+    }
+
+    fun addTasks(tasks: ArrayList<Task>) {
+
     }
 
     fun editTask(task: Task) {
@@ -86,8 +92,8 @@ class TaskAdapter(private val mainActivity: MainActivity):
     @SuppressLint("NotifyDataSetChanged")
     private fun deleteTask(position: Int) {
         taskList.removeAt(position)
-        taskTimerPerformer.deleteTimers(position, false)
         notifyItemRemoved(position)
         notifyDataSetChanged()
+        taskTimerPerformer.deleteTimers(position, false)
     }
 }

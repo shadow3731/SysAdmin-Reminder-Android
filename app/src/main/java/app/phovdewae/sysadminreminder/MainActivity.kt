@@ -1,18 +1,21 @@
-package phovdewae.sysadminreminder
+package app.phovdewae.sysadminreminder
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import app.phovdewae.sysadminreminder.tasks.TaskAdapter
+import app.phovdewae.sysadminreminder.tasks.TaskCloud
+import app.phovdewae.sysadminreminder.view_activities.BottomNavigationViewActivity
+import app.phovdewae.sysadminreminder.view_activities.CardViewActivity
+import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.ActivityMainBinding
-import phovdewae.sysadminreminder.tasks.TaskAdapter
-import phovdewae.sysadminreminder.view_activities.BottomNavigationViewActivity
-import phovdewae.sysadminreminder.view_activities.CardViewActivity
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    private val taskAdapter = TaskAdapter(this)
+    private val taskCloud = TaskCloud()
+    private val taskAdapter = TaskAdapter(this, taskCloud)
     lateinit var cardViewActivity: CardViewActivity
     lateinit var bottomNavigationViewActivity: BottomNavigationViewActivity
 

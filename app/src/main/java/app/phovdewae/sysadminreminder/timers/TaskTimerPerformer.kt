@@ -1,8 +1,8 @@
-package phovdewae.sysadminreminder.timers
+package app.phovdewae.sysadminreminder.timers
 
 import android.graphics.Color
 import androidx.cardview.widget.CardView
-import phovdewae.sysadminreminder.util.makeBackground
+import app.phovdewae.sysadminreminder.util.makeBackground
 import java.util.Date
 import java.util.Timer
 import java.util.TimerTask
@@ -41,9 +41,11 @@ class TaskTimerPerformer {
 
     fun addTimers(position: Int?, timestamp: Date, cardView: CardView) {
         val current = timestamp.time - Date().time
-        timers.add(ArrayList(taskTimerLists.size))
 
-        if (position == null) cardViews.add(cardView)
+        if (position == null) {
+            timers.add(ArrayList(taskTimerLists.size))
+            cardViews.add(cardView)
+        } else timers.add(position, ArrayList(taskTimerLists.size))
 
         for (i in 0 until taskTimerLists.size) {
             if (taskTimerLists[i].isEnable && current > taskTimerLists[i].duration) {
@@ -55,12 +57,15 @@ class TaskTimerPerformer {
                         cardView
                     ))
                 } else {
-                    timers[timers.size - 1].add(position, createTimerTask(
+                    timers[position].add(createTimerTask(
                         difference,
                         taskTimerLists[i].backgroundColor,
                         cardView
                     ))
                 }
+            } else {
+                if (position == null) timers[timers.size - 1].add(null)
+                else timers[position].add(null)
             }
         }
     }
@@ -72,11 +77,7 @@ class TaskTimerPerformer {
 
     fun deleteTimers(position: Int, forReschedule: Boolean) {
         for (i in 0 until timers[position].size) {
-            timers[position][i]?.schedule(object : TimerTask() {
-                override fun run() {
-                    timers[position][i]?.cancel()
-                }
-            }, 0)
+            timers[position][i]?.cancel()
         }
 
         timers.removeAt(position)

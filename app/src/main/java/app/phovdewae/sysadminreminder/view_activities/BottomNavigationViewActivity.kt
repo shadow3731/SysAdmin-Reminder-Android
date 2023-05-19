@@ -1,18 +1,19 @@
-package phovdewae.sysadminreminder.view_activities
+package app.phovdewae.sysadminreminder.view_activities
 
+import app.phovdewae.sysadminreminder.MainActivity
+import app.phovdewae.sysadminreminder.tasks.TaskAdapter
+import app.phovdewae.sysadminreminder.util.lastState
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import phovdewae.sysadminreminder.MainActivity
 import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.ActivityMainBinding
-import phovdewae.sysadminreminder.tasks.TaskAdapter
-import phovdewae.sysadminreminder.util.lastState
 
 class BottomNavigationViewActivity(private val bottomNavigationView: BottomNavigationView) {
 
     fun onCreate(binding: ActivityMainBinding,
                  mainActivity: MainActivity,
                  cardViewActivity: CardViewActivity,
-                 taskAdapter: TaskAdapter) {
+                 taskAdapter: TaskAdapter
+    ) {
         changeMainActivityNameOrAddTask(binding,
             mainActivity,
             cardViewActivity,
@@ -30,10 +31,10 @@ class BottomNavigationViewActivity(private val bottomNavigationView: BottomNavig
     }
 
     fun changeMainActivityNameOrAddTask(binding: ActivityMainBinding,
-                                                mainActivity: MainActivity,
-                                                cardViewActivity: CardViewActivity,
-                                                taskAdapter: TaskAdapter,
-                                                itemId: Int) {
+                                        mainActivity: MainActivity,
+                                        cardViewActivity: CardViewActivity,
+                                        taskAdapter: TaskAdapter,
+                                        itemId: Int) {
         when (itemId) {
             R.id.tasks -> {
                 mainActivity.title = mainActivity.getString(R.string.tasks_name)

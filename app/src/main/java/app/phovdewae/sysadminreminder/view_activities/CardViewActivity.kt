@@ -1,4 +1,4 @@
-package phovdewae.sysadminreminder.view_activities
+package app.phovdewae.sysadminreminder.view_activities
 
 import android.content.Context
 import android.graphics.Color
@@ -12,23 +12,23 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import phovdewae.sysadminreminder.MainActivity
+import app.phovdewae.sysadminreminder.MainActivity
+import app.phovdewae.sysadminreminder.tasks.Task
+import app.phovdewae.sysadminreminder.tasks.TaskAdapter
+import app.phovdewae.sysadminreminder.util.counter
+import app.phovdewae.sysadminreminder.util.dateToString
+import app.phovdewae.sysadminreminder.util.definePriorityId
+import app.phovdewae.sysadminreminder.util.disable
+import app.phovdewae.sysadminreminder.util.enable
+import app.phovdewae.sysadminreminder.util.getPriorities
+import app.phovdewae.sysadminreminder.util.hideKeyboard
+import app.phovdewae.sysadminreminder.util.isValid
+import app.phovdewae.sysadminreminder.util.move
+import app.phovdewae.sysadminreminder.util.prepareForDateTime
+import app.phovdewae.sysadminreminder.util.stringToDateTime
+import app.phovdewae.sysadminreminder.util.timeToString
 import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.ActivityMainBinding
-import phovdewae.sysadminreminder.tasks.Task
-import phovdewae.sysadminreminder.tasks.TaskAdapter
-import phovdewae.sysadminreminder.util.counter
-import phovdewae.sysadminreminder.util.dateToString
-import phovdewae.sysadminreminder.util.definePriorityId
-import phovdewae.sysadminreminder.util.disable
-import phovdewae.sysadminreminder.util.enable
-import phovdewae.sysadminreminder.util.getPriorities
-import phovdewae.sysadminreminder.util.hideKeyboard
-import phovdewae.sysadminreminder.util.isValid
-import phovdewae.sysadminreminder.util.prepareForDateTime
-import phovdewae.sysadminreminder.util.move
-import phovdewae.sysadminreminder.util.stringToDateTime
-import phovdewae.sysadminreminder.util.timeToString
 
 class CardViewActivity(private val cardView: CardView) {
 
@@ -85,11 +85,13 @@ class CardViewActivity(private val cardView: CardView) {
             bTaskAddEdit.setOnClickListener {
                 if (isValid(etTaskDesc.text.toString(),
                         etTaskExecDate.text.toString(),
-                        etTaskExecTime.text.toString())) {
+                        etTaskExecTime.text.toString())
+                ) {
                     val task = Task((++counter).toLong(),
                         etTaskDesc.text.toString(),
                         stringToDateTime(etTaskExecDate.text.toString(), etTaskExecTime.text.toString()),
-                        spinnerListener.selectedPriority
+                        spinnerListener.selectedPriority,
+                        mainActivity.getString(R.string.active_task)
                     )
                     rvMain.layoutManager = LinearLayoutManager(mainActivity)
                     rvMain.adapter = taskAdapter

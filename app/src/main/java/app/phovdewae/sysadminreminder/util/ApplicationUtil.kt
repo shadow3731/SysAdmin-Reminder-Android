@@ -1,4 +1,4 @@
-package phovdewae.sysadminreminder.util
+package app.phovdewae.sysadminreminder.util
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -7,13 +7,13 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.recyclerview.widget.RecyclerView
+import app.phovdewae.sysadminreminder.view_activities.BottomNavigationViewActivity
+import app.phovdewae.sysadminreminder.view_activities.CardViewActivity
+import app.phovdewae.sysadminreminder.MainActivity
+import app.phovdewae.sysadminreminder.tasks.TaskAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import phovdewae.sysadminreminder.MainActivity
 import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.ActivityMainBinding
-import phovdewae.sysadminreminder.tasks.TaskAdapter
-import phovdewae.sysadminreminder.view_activities.BottomNavigationViewActivity
-import phovdewae.sysadminreminder.view_activities.CardViewActivity
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale

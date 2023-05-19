@@ -30,7 +30,12 @@ fun stringToDateTime(srcDate: String, srcTime: String): Date {
     val dateTimeFormat = SimpleDateFormat("$datePattern $timePattern", Locale.getDefault())
     dateTimeFormat.isLenient = false
     return dateTimeFormat.parse("$srcDate $srcTime")!!
+}
 
+fun stringToDateTime(srcDateTime: String): Date {
+    val dateTimeFormat = SimpleDateFormat("$datePattern $timePattern", Locale.getDefault())
+    dateTimeFormat.isLenient = false
+    return dateTimeFormat.parse(srcDateTime)!!
 }
 
 fun getPriorities(context: Context): Array<String> {

@@ -1,12 +1,20 @@
 package app.phovdewae.sysadminreminder.tasks
 
-import java.io.Serializable
+import app.phovdewae.sysadminreminder.util.dateTimeToString
 import java.util.Date
 
-data class Task(
-    val id: Long,
-    var description: String,
-    var executionTime: Date,
-    var priority: String,
-    var status: String
-    ): Serializable
+class Task(
+    var id: Long?,
+    var description: String?,
+    var executionTime: Date?,
+    var priority: String?,
+    var status: String?
+    ) {
+
+    constructor() : this(null, null, null, null, null)
+
+    fun toStringForFile(): String {
+        return "||$id||$description||${
+            dateTimeToString(executionTime!!)}||$priority||$status||"
+    }
+}

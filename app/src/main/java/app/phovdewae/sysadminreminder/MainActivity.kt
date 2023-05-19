@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import app.phovdewae.sysadminreminder.tasks.TaskAdapter
 import app.phovdewae.sysadminreminder.tasks.TaskCloud
 import app.phovdewae.sysadminreminder.view_activities.BottomNavigationViewActivity
@@ -25,6 +26,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.apply {
+            rvMain.layoutManager = LinearLayoutManager(this@MainActivity)
+            rvMain.adapter = taskAdapter
+
+            val tasks = taskCloud.loadTasksFromFile(this@MainActivity)
+            if (tasks != null && tasks.size > 0) taskAdapter.addTasks(tasks)
+
             cardViewActivity = CardViewActivity(cvTaskMain)
             bottomNavigationViewActivity = BottomNavigationViewActivity(bnvMain)
 

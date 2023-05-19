@@ -120,14 +120,17 @@ class CardViewActivity(private val cardView: CardView) {
 
             etTaskDesc.text = Editable.Factory.getInstance()
                 .newEditable(task.description)
-            etTaskExecDate.text = Editable.Factory.getInstance()
-                .newEditable(dateToString(task.executionTime))
-            etTaskExecTime.text = Editable.Factory.getInstance()
-                .newEditable(timeToString(task.executionTime))
+            if (task.executionTime != null) {
+                etTaskExecDate.text = Editable.Factory.getInstance()
+                    .newEditable(dateToString(task.executionTime!!))
+                etTaskExecTime.text = Editable.Factory.getInstance()
+                    .newEditable(timeToString(task.executionTime!!))
+            }
 
             val spinnerListener = SpinnerOnItemSelectedListener()
             sTaskPrior.onItemSelectedListener = spinnerListener
-            sTaskPrior.setSelection(definePriorityId(mainActivity, task.priority))
+            if (task.priority != null) sTaskPrior
+                .setSelection(definePriorityId(mainActivity, task.priority!!))
 
             bTaskAddEdit.text = mainActivity.getText(R.string.edit_task)
 

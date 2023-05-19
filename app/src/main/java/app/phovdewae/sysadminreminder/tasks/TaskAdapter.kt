@@ -1,6 +1,7 @@
 package app.phovdewae.sysadminreminder.tasks
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,7 @@ class TaskAdapter(private val mainActivity: MainActivity, private val taskCloud:
     RecyclerView.Adapter<TaskAdapter.TaskHolder>() {
 
     private val taskTimerPerformer = TaskTimerPerformer()
-    private val taskList = ArrayList<Task>()
+    private var taskList = ArrayList<Task>()
 
     inner class TaskHolder(item: View): RecyclerView.ViewHolder(item) {
 
@@ -27,11 +28,14 @@ class TaskAdapter(private val mainActivity: MainActivity, private val taskCloud:
         fun bind(task: Task) = with(holderBinding) {
             tvId.text = task.id.toString()
             tvDescription.text = task.description
-            tvExecutionTime.text = dateTimeToString(task.executionTime)
+            if (task.executionTime != null)
+                tvExecutionTime.text = dateTimeToString(task.executionTime!!)
             tvPriority.text = task.priority
 
-            makeBackground(taskTimerPerformer.getColor(task.executionTime), cvTaskField)
-            taskTimerPerformer.addTimers(null, task.executionTime, cvTaskField)
+            if (task.executionTime != null) {
+                makeBackground(taskTimerPerformer.getColor(task.executionTime!!), cvTaskField)
+                taskTimerPerformer.addTimers(null, task.executionTime!!, cvTaskField)
+            }
         }
     }
 
@@ -80,20 +84,27 @@ class TaskAdapter(private val mainActivity: MainActivity, private val taskCloud:
     }
 
     fun addTasks(tasks: ArrayList<Task>) {
-
+        taskList = tasks
+        notifyItemRangeInserted(0, taskList.size)
     }
 
     fun editTask(task: Task) {
         val position = taskList.indexOf(taskList.find { it.id == task.id })
-        taskTimerPerformer.editTimers(position, task.executionTime)
-        notifyItemChanged(position)
+        if (task.executionTime != null)
+            taskTimerPerformer.editTimers(position, task.executionTime!!)
+        if (taskCloud.saveTasksToFile(taskList, mainActivity)) {
+            notifyItemChanged(position)
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun deleteTask(position: Int) {
-        taskList.removeAt(position)
-        notifyItemRemoved(position)
-        notifyDataSetChanged()
-        taskTimerPerformer.deleteTimers(position, false)
+        taskList[position].status = mainActivity.getString(R.string.finished_task)
+        if (taskCloud.saveTasksToFile(taskList, mainActivity)) {
+            taskList.removeAt(position)
+            notifyItemRemoved(position)
+            notifyDataSetChanged()
+            taskTimerPerformer.deleteTimers(position, false)
+        }
     }
 }

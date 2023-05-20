@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import app.phovdewae.sysadminreminder.tasks.TaskAdapter
 import app.phovdewae.sysadminreminder.tasks.TaskCloud
 import app.phovdewae.sysadminreminder.view_activities.BottomNavigationViewActivity
 import app.phovdewae.sysadminreminder.view_activities.CardViewActivity
+import app.phovdewae.sysadminreminder.view_activities.RecyclerViewActivity
 import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.ActivityMainBinding
 
@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     private val taskAdapter = TaskAdapter(this, taskCloud)
     lateinit var cardViewActivity: CardViewActivity
     lateinit var bottomNavigationViewActivity: BottomNavigationViewActivity
+    lateinit var recyclerViewActivity: RecyclerViewActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,20 +27,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.apply {
-            rvMain.layoutManager = LinearLayoutManager(this@MainActivity)
-            rvMain.adapter = taskAdapter
-
-            val tasks = taskCloud.loadTasksFromFile(this@MainActivity)
-            if (tasks != null && tasks.size > 0) taskAdapter.addTasks(tasks)
-
             cardViewActivity = CardViewActivity(cvTaskMain)
             bottomNavigationViewActivity = BottomNavigationViewActivity(bnvMain)
+            recyclerViewActivity = RecyclerViewActivity(rvMain)
 
             bottomNavigationViewActivity.onCreate(
                 binding,
                 this@MainActivity,
                 cardViewActivity,
-                taskAdapter
+                recyclerViewActivity,
+                taskAdapter,
+                taskCloud
             )
         }
     }

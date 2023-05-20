@@ -1,7 +1,7 @@
 package app.phovdewae.sysadminreminder.tasks
 
 import android.annotation.SuppressLint
-import android.util.Log
+import android.graphics.Color
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import app.phovdewae.sysadminreminder.MainActivity
 import app.phovdewae.sysadminreminder.timers.TaskTimerPerformer
 import app.phovdewae.sysadminreminder.util.dateTimeToString
+import app.phovdewae.sysadminreminder.util.lastState
 import app.phovdewae.sysadminreminder.util.makeBackground
 import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.TaskItemBinding
@@ -25,16 +26,27 @@ class TaskAdapter(private val mainActivity: MainActivity, private val taskCloud:
 
         private val holderBinding = TaskItemBinding.bind(item)
 
-        fun bind(task: Task) = with(holderBinding) {
+        fun bind(task: Task, isExecutable: Boolean) = with(holderBinding) {
             tvId.text = task.id.toString()
-            tvDescription.text = task.description
+
+            if (isExecutable) tvDescription.text = task.description
+            else {
+                val text = "(${task.status}) ${task.description}"
+                tvDescription.text = text
+            }
+
             if (task.executionTime != null)
                 tvExecutionTime.text = dateTimeToString(task.executionTime!!)
+
             tvPriority.text = task.priority
 
             if (task.executionTime != null) {
-                makeBackground(taskTimerPerformer.getColor(task.executionTime!!), cvTaskField)
-                taskTimerPerformer.addTimers(null, task.executionTime!!, cvTaskField)
+                if (isExecutable) {
+                    makeBackground(taskTimerPerformer.getColor(task.executionTime!!), cvTaskField)
+                    taskTimerPerformer.addTimers(null, task.executionTime!!, cvTaskField)
+                } else {
+                    makeBackground(Color.WHITE, cvTaskField)
+                }
             }
         }
     }
@@ -52,27 +64,34 @@ class TaskAdapter(private val mainActivity: MainActivity, private val taskCloud:
     }
 
     override fun onBindViewHolder(holder: TaskHolder, position: Int) {
-        holder.bind(taskList[position])
+        when (lastState) {
+            R.id.tasks -> {
+                holder.bind(taskList[position], true)
 
-        holder.itemView.setOnLongClickListener {
-            val popupMenu = PopupMenu(mainActivity, it, Gravity.END)
-            popupMenu.inflate(R.menu.popup_menu)
-            popupMenu.setOnMenuItemClickListener { menuItem ->
-                when (menuItem.itemId) {
-                    R.id.edit_task_popup -> mainActivity.cardViewActivity
-                        .onChange(
-                            taskList[position],
-                            mainActivity.binding,
-                            mainActivity,
-                            mainActivity.bottomNavigationViewActivity,
-                            this
-                        )
-                    R.id.delete_task_popup -> deleteTask(position)
+                holder.itemView.setOnLongClickListener {
+                    val popupMenu = PopupMenu(mainActivity, it, Gravity.END)
+                    popupMenu.inflate(R.menu.popup_menu)
+                    popupMenu.setOnMenuItemClickListener { menuItem ->
+                        when (menuItem.itemId) {
+                            R.id.edit_task_popup -> mainActivity.cardViewActivity
+                                .onChange(
+                                    taskList[position],
+                                    mainActivity.binding,
+                                    mainActivity,
+                                    mainActivity.bottomNavigationViewActivity,
+                                    mainActivity.recyclerViewActivity,
+                                    this,
+                                    taskCloud
+                                )
+                            R.id.delete_task_popup -> deleteTask(position)
+                        }
+                        true
+                    }
+                    popupMenu.show()
+                    true
                 }
-                true
             }
-            popupMenu.show()
-            true
+            R.id.tasks_history -> holder.bind(taskList[position], false)
         }
     }
 
@@ -106,5 +125,10 @@ class TaskAdapter(private val mainActivity: MainActivity, private val taskCloud:
             notifyDataSetChanged()
             taskTimerPerformer.deleteTimers(position, false)
         }
+    }
+
+    fun deleteAllTasks() {
+        taskList.clear()
+        taskTimerPerformer.deleteAllTimers()
     }
 }

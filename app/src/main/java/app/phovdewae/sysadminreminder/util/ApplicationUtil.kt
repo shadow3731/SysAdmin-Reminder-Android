@@ -11,6 +11,8 @@ import app.phovdewae.sysadminreminder.view_activities.BottomNavigationViewActivi
 import app.phovdewae.sysadminreminder.view_activities.CardViewActivity
 import app.phovdewae.sysadminreminder.MainActivity
 import app.phovdewae.sysadminreminder.tasks.TaskAdapter
+import app.phovdewae.sysadminreminder.tasks.TaskCloud
+import app.phovdewae.sysadminreminder.view_activities.RecyclerViewActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.ActivityMainBinding
@@ -18,7 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-var lastState = R.string.tasks_name
+var lastState = R.id.tasks
 
 fun View.enable() {
     isEnabled = true
@@ -54,7 +56,9 @@ fun BottomNavigationView.enable(
     binding: ActivityMainBinding,
     mainActivity: MainActivity,
     cardViewActivity: CardViewActivity,
-    taskAdapter: TaskAdapter
+    recyclerViewActivity: RecyclerViewActivity,
+    taskAdapter: TaskAdapter,
+    taskCloud: TaskCloud
 ) {
     setOnItemSelectedListener {
         bottomNavigationViewActivity
@@ -62,7 +66,9 @@ fun BottomNavigationView.enable(
                 binding,
                 mainActivity,
                 cardViewActivity,
+                recyclerViewActivity,
                 taskAdapter,
+                taskCloud,
                 it.itemId)
         true
     }

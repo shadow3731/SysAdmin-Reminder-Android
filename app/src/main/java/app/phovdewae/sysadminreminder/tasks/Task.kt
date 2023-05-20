@@ -17,4 +17,13 @@ class Task(
         return "||$id||$description||${
             dateTimeToString(executionTime!!)}||$priority||$status||"
     }
+
+    override fun toString(): String {
+        return "Task(" +
+                "id=$id, " +
+                "description=$description, " +
+                "executionTime=$executionTime, " +
+                "priority=$priority, " +
+                "status=$status)"
+    }
 }

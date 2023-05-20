@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import app.phovdewae.sysadminreminder.MainActivity
 import app.phovdewae.sysadminreminder.tasks.Task
 import app.phovdewae.sysadminreminder.tasks.TaskAdapter
+import app.phovdewae.sysadminreminder.tasks.TaskCloud
 import app.phovdewae.sysadminreminder.util.counter
 import app.phovdewae.sysadminreminder.util.dateToString
 import app.phovdewae.sysadminreminder.util.definePriorityId
@@ -70,9 +71,18 @@ class CardViewActivity(private val cardView: CardView) {
         binding: ActivityMainBinding,
         mainActivity: MainActivity,
         bottomNavigationViewActivity: BottomNavigationViewActivity,
-        taskAdapter: TaskAdapter
+        recyclerViewActivity: RecyclerViewActivity,
+        taskAdapter: TaskAdapter,
+        taskCloud: TaskCloud
     ) {
-        open(binding, mainActivity, bottomNavigationViewActivity, taskAdapter)
+        open(
+            binding,
+            mainActivity,
+            bottomNavigationViewActivity,
+            recyclerViewActivity,
+            taskAdapter,
+            taskCloud
+        )
 
         binding.apply {
             tvNewTaskTitle.text = mainActivity.getString(R.string.new_task_name)
@@ -97,7 +107,14 @@ class CardViewActivity(private val cardView: CardView) {
                     rvMain.adapter = taskAdapter
                     taskAdapter.addTask(task)
 
-                    close(this, mainActivity, bottomNavigationViewActivity, taskAdapter)
+                    close(
+                        this,
+                        mainActivity,
+                        bottomNavigationViewActivity,
+                        recyclerViewActivity,
+                        taskAdapter,
+                        taskCloud
+                    )
                     bnvMain.move(true, mainActivity)
                 } else {
                     Toast.makeText(mainActivity, R.string.invalid_data, Toast.LENGTH_SHORT).show()
@@ -111,9 +128,18 @@ class CardViewActivity(private val cardView: CardView) {
         binding: ActivityMainBinding,
         mainActivity: MainActivity,
         bottomNavigationViewActivity: BottomNavigationViewActivity,
-        taskAdapter: TaskAdapter
+        recyclerViewActivity: RecyclerViewActivity,
+        taskAdapter: TaskAdapter,
+        taskCloud: TaskCloud
     ) {
-        open(binding, mainActivity, bottomNavigationViewActivity, taskAdapter)
+        open(
+            binding,
+            mainActivity,
+            bottomNavigationViewActivity,
+            recyclerViewActivity,
+            taskAdapter,
+            taskCloud
+        )
 
         binding.apply {
             tvNewTaskTitle.text = mainActivity.getString(R.string.edit_task_name)
@@ -150,7 +176,14 @@ class CardViewActivity(private val cardView: CardView) {
                     rvMain.adapter = taskAdapter
                     taskAdapter.editTask(task)
 
-                    close(this, mainActivity, bottomNavigationViewActivity, taskAdapter)
+                    close(
+                        this,
+                        mainActivity,
+                        bottomNavigationViewActivity,
+                        recyclerViewActivity,
+                        taskAdapter,
+                        taskCloud
+                    )
                     bnvMain.move(true, mainActivity)
                 } else {
                     Toast.makeText(mainActivity, R.string.invalid_data, Toast.LENGTH_SHORT).show()
@@ -163,7 +196,9 @@ class CardViewActivity(private val cardView: CardView) {
         binding: ActivityMainBinding,
         mainActivity: MainActivity,
         bottomNavigationViewActivity: BottomNavigationViewActivity,
-        taskAdapter: TaskAdapter
+        recyclerViewActivity: RecyclerViewActivity,
+        taskAdapter: TaskAdapter,
+        taskCloud: TaskCloud
     ) {
         cardView.visibility = View.VISIBLE
 
@@ -179,7 +214,14 @@ class CardViewActivity(private val cardView: CardView) {
             sTaskPrior.adapter = spinnerAdapter
 
             bTaskCancel.setOnClickListener {
-                close(this, mainActivity, bottomNavigationViewActivity, taskAdapter)
+                close(
+                    this,
+                    mainActivity,
+                    bottomNavigationViewActivity,
+                    recyclerViewActivity,
+                    taskAdapter,
+                    taskCloud
+                )
                 bnvMain.move(false, mainActivity)
             }
         }
@@ -189,7 +231,9 @@ class CardViewActivity(private val cardView: CardView) {
         binding: ActivityMainBinding,
         mainActivity: MainActivity,
         bottomNavigationViewActivity: BottomNavigationViewActivity,
-        taskAdapter: TaskAdapter
+        recyclerViewActivity: RecyclerViewActivity,
+        taskAdapter: TaskAdapter,
+        taskCloud: TaskCloud
     ) {
         binding.apply {
             cardView.visibility = View.GONE
@@ -206,7 +250,10 @@ class CardViewActivity(private val cardView: CardView) {
                 binding,
                 mainActivity,
                 this@CardViewActivity,
-                taskAdapter)
+                recyclerViewActivity,
+                taskAdapter,
+                taskCloud
+            )
         }
     }
 }

@@ -84,6 +84,17 @@ class TaskTimerPerformer {
         if (!forReschedule) cardViews.removeAt(position)
     }
 
+    fun deleteAllTimers() {
+        for (i in 0 until timers.size) {
+            for (j in 0 until timers[i].size) {
+                timers[i][j]?.cancel()
+            }
+        }
+
+        timers.clear()
+        cardViews.clear()
+    }
+
     private fun createTimerTask(mills: Long, color: Int, cardView: CardView): Timer {
         val timer = Timer()
         val task = object : TimerTask() {

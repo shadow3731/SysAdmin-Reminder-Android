@@ -55,7 +55,7 @@ class BottomNavigationViewActivity(private val bottomNavigationView: BottomNavig
             R.id.tasks -> {
                 lastState = R.id.tasks
                 mainActivity.title = mainActivity.getString(R.string.tasks_name)
-                recyclerViewActivity.showTasks(mainActivity, taskAdapter, taskCloud, true)
+                recyclerViewActivity.showTasks(mainActivity, taskAdapter, taskCloud)
             }
             R.id.new_task -> {
                 cardViewActivity.onCreate(
@@ -70,7 +70,7 @@ class BottomNavigationViewActivity(private val bottomNavigationView: BottomNavig
             R.id.tasks_history -> {
                 lastState = R.id.tasks_history
                 mainActivity.title = mainActivity.getString(R.string.tasks_history_name)
-                recyclerViewActivity.showTasks(mainActivity, taskAdapter, taskCloud, false)
+                recyclerViewActivity.showTasks(mainActivity, taskAdapter, taskCloud)
             }
         }
     }

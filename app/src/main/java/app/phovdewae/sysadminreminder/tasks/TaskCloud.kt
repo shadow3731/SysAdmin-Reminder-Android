@@ -3,7 +3,6 @@ package app.phovdewae.sysadminreminder.tasks
 import android.content.Context
 import app.phovdewae.sysadminreminder.util.counter
 import app.phovdewae.sysadminreminder.util.stringToDateTime
-import phovdewae.sysadminreminder.R
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -30,14 +29,14 @@ class TaskCloud {
         }
     }
 
-    fun loadTasksFromFile(context: Context, onlyActive: Boolean): ArrayList<Task>? {
+    fun loadTasksFromFile(context: Context): ArrayList<Task>? {
         return try {
             val directory = File(context.getExternalFilesDir(null), "task")
             if (!directory.exists()) directory.mkdirs()
 
             val file = File(directory, fileName)
 
-            stringToArrayList(file.readText(), context, onlyActive)
+            stringToArrayList(file.readText())
         } catch (e: Exception) {
             e.printStackTrace()
             null
@@ -54,11 +53,7 @@ class TaskCloud {
         return list
     }
 
-    private fun stringToArrayList(
-        rawString: String,
-        context: Context,
-        onlyActive: Boolean
-    ): ArrayList<Task> {
+    private fun stringToArrayList(rawString: String): ArrayList<Task> {
         val patterns = arrayOf(
             Regex("[^\\n]+"),
             Regex("[^|]+")
@@ -84,10 +79,7 @@ class TaskCloud {
             }
 
             counter++
-
-            if (onlyActive) {
-                if (task.status == context.getString(R.string.active_task)) tasks.add(task)
-            } else tasks.add(task)
+            tasks.add(task)
         }
 
         return tasks

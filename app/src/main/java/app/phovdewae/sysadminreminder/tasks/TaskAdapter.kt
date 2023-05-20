@@ -21,6 +21,7 @@ class TaskAdapter(private val mainActivity: MainActivity, private val taskCloud:
 
     private val taskTimerPerformer = TaskTimerPerformer()
     private var taskList = ArrayList<Task>()
+    private var activeTaskList = ArrayList<Task>()
 
     inner class TaskHolder(item: View): RecyclerView.ViewHolder(item) {
 
@@ -60,35 +61,42 @@ class TaskAdapter(private val mainActivity: MainActivity, private val taskCloud:
     }
 
     override fun getItemCount(): Int {
-        return taskList.size
+        return when(lastState) {
+            R.id.tasks -> activeTaskList.size
+            R.id.tasks_history -> taskList.size
+            else -> activeTaskList.size
+        }
     }
 
     override fun onBindViewHolder(holder: TaskHolder, position: Int) {
         when (lastState) {
             R.id.tasks -> {
-                holder.bind(taskList[position], true)
+                if (activeTaskList[position].status == mainActivity.getString(R.string.active_task)) {
+                    holder.bind(activeTaskList[position], true)
 
-                holder.itemView.setOnLongClickListener {
-                    val popupMenu = PopupMenu(mainActivity, it, Gravity.END)
-                    popupMenu.inflate(R.menu.popup_menu)
-                    popupMenu.setOnMenuItemClickListener { menuItem ->
-                        when (menuItem.itemId) {
-                            R.id.edit_task_popup -> mainActivity.cardViewActivity
-                                .onChange(
-                                    taskList[position],
-                                    mainActivity.binding,
-                                    mainActivity,
-                                    mainActivity.bottomNavigationViewActivity,
-                                    mainActivity.recyclerViewActivity,
-                                    this,
-                                    taskCloud
-                                )
-                            R.id.delete_task_popup -> deleteTask(position)
+                    holder.itemView.setOnLongClickListener {
+                        val popupMenu = PopupMenu(mainActivity, it, Gravity.END)
+                        popupMenu.inflate(R.menu.popup_menu)
+                        popupMenu.setOnMenuItemClickListener { menuItem ->
+                            when (menuItem.itemId) {
+                                R.id.edit_task_popup -> mainActivity.cardViewActivity
+                                    .onChange(
+                                        activeTaskList[position],
+                                        mainActivity.binding,
+                                        mainActivity,
+                                        mainActivity.bottomNavigationViewActivity,
+                                        mainActivity.recyclerViewActivity,
+                                        this,
+                                        taskCloud
+                                    )
+
+                                R.id.delete_task_popup -> deleteTask(position)
+                            }
+                            true
                         }
+                        popupMenu.show()
                         true
                     }
-                    popupMenu.show()
-                    true
                 }
             }
             R.id.tasks_history -> holder.bind(taskList[position], false)
@@ -97,18 +105,25 @@ class TaskAdapter(private val mainActivity: MainActivity, private val taskCloud:
 
     fun addTask(task: Task) {
         taskList.add(task)
+        activeTaskList.add(task)
+
         if (taskCloud.saveTasksToFile(taskList, mainActivity)) {
-            notifyItemInserted(taskList.indexOf(task))
+            notifyItemInserted(activeTaskList.size - 1)
         }
     }
 
     fun addTasks(tasks: ArrayList<Task>) {
         taskList = tasks
-        notifyItemRangeInserted(0, taskList.size)
+        for (task in taskList) {
+            if (task.status == mainActivity.getString(R.string.active_task))
+                activeTaskList.add(task)
+        }
+
+        notifyItemRangeInserted(0, activeTaskList.size)
     }
 
     fun editTask(task: Task) {
-        val position = taskList.indexOf(taskList.find { it.id == task.id })
+        val position = activeTaskList.indexOf(activeTaskList.find { it.id == task.id })
         if (task.executionTime != null)
             taskTimerPerformer.editTimers(position, task.executionTime!!)
         if (taskCloud.saveTasksToFile(taskList, mainActivity)) {
@@ -118,9 +133,9 @@ class TaskAdapter(private val mainActivity: MainActivity, private val taskCloud:
 
     @SuppressLint("NotifyDataSetChanged")
     private fun deleteTask(position: Int) {
-        taskList[position].status = mainActivity.getString(R.string.finished_task)
+        activeTaskList[position].status = mainActivity.getString(R.string.finished_task)
         if (taskCloud.saveTasksToFile(taskList, mainActivity)) {
-            taskList.removeAt(position)
+            activeTaskList.removeAt(position)
             notifyItemRemoved(position)
             notifyDataSetChanged()
             taskTimerPerformer.deleteTimers(position, false)
@@ -129,6 +144,7 @@ class TaskAdapter(private val mainActivity: MainActivity, private val taskCloud:
 
     fun deleteAllTasks() {
         taskList.clear()
+        activeTaskList.clear()
         taskTimerPerformer.deleteAllTimers()
     }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="db_connection_config_header">Database connection configuration</string>
+    <string name="db_address_hint">Address:</string>
+    <string name="db_port_hint">Port:</string>
+    <string name="db_name_hint">Database name:</string>
+    <string name="db_username_hint">Username:</string>
+    <string name="db_password_hint">Password:</string>
+    <string name="period_sync_header">Database synchronization</string>
+    <string name="period_sync_time_hint">Synchronize with database every (in minutes):</string>
+    <string name="timers_activation_moment_header">Time of timers activation before the event occurs (in minutes)</string>
+    <string name="yellow_timer_hint">Yellow:</string>
+    <string name="orange_timer_hint">Orange:</string>
+    <string name="red_timer_hint">Red:</string>
+    <string name="gray_timer_hint">Gray:</string>
+    <string name="timer_activation_node">A negative value of time means the timer will expire after the event occurs.</string>
+</resources>

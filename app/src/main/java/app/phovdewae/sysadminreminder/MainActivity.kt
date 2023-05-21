@@ -3,11 +3,14 @@ package app.phovdewae.sysadminreminder
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import app.phovdewae.sysadminreminder.tasks.TaskAdapter
 import app.phovdewae.sysadminreminder.tasks.TaskCloud
+import app.phovdewae.sysadminreminder.util.counter
+import app.phovdewae.sysadminreminder.util.lastState
 import app.phovdewae.sysadminreminder.view_activities.BottomNavigationViewActivity
 import app.phovdewae.sysadminreminder.view_activities.CardViewActivity
 import app.phovdewae.sysadminreminder.view_activities.RecyclerViewActivity
@@ -54,5 +57,26 @@ class MainActivity : AppCompatActivity() {
             R.id.settings -> startActivity(Intent(this, SettingsActivity::class.java))
         }
         return true
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt("lastState", lastState)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        bottomNavigationViewActivity.changeMainActivityNameOrAddTask(
+            binding,
+            this,
+            cardViewActivity,
+            recyclerViewActivity,
+            taskAdapter,
+            taskCloud,
+            binding.bnvMain.selectedItemId
+        )
+
+        lastState = savedInstanceState.getInt("lastState")
     }
 }

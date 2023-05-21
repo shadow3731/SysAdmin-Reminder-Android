@@ -8,4 +8,49 @@
     android:background="@color/white"
     tools:context="app.phovdewae.sysadminreminder.SettingsActivity">
 
+    <TextView
+        android:id="@+id/tv_db_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="start"
+        android:text="@string/db_connection_config_header"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_db_settings">
+
+        <TextView
+            android:id="@+id/tv_db_address"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center|start"
+            android:text="@string/db_address_hint"
+            android:textColor="@color/black" />
+
+        <EditText
+            android:id="@+id/et_db_address"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:autofillHints=""
+            android:background="@drawable/background"
+            android:ems="10"
+            android:inputType="text"
+            android:labelFor="@id/tv_db_address" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

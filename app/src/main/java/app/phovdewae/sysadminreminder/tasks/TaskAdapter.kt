@@ -2,6 +2,7 @@ package app.phovdewae.sysadminreminder.tasks
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import app.phovdewae.sysadminreminder.MainActivity
 import app.phovdewae.sysadminreminder.timers.TaskTimerPerformer
+import app.phovdewae.sysadminreminder.util.counter
 import app.phovdewae.sysadminreminder.util.dateTimeToString
 import app.phovdewae.sysadminreminder.util.lastState
 import app.phovdewae.sysadminreminder.util.makeBackground
@@ -115,10 +117,11 @@ class TaskAdapter(private val mainActivity: MainActivity, private val taskCloud:
     fun addTasks(tasks: ArrayList<Task>) {
         taskList = tasks
         for (task in taskList) {
-            if (task.status == mainActivity.getString(R.string.active_task))
+            if (task.status == mainActivity.getString(R.string.active_task)) {
                 activeTaskList.add(task)
+                counter++
+            }
         }
-
         notifyItemRangeInserted(0, activeTaskList.size)
     }
 
@@ -146,5 +149,6 @@ class TaskAdapter(private val mainActivity: MainActivity, private val taskCloud:
         taskList.clear()
         activeTaskList.clear()
         taskTimerPerformer.deleteAllTimers()
+        counter = 0
     }
 }

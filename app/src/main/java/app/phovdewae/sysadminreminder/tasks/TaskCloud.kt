@@ -78,7 +78,6 @@ class TaskCloud {
                 i++
             }
 
-            counter++
             tasks.add(task)
         }
 

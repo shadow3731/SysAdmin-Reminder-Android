@@ -10,12 +10,12 @@ import java.util.TimerTask
 class TaskTimerPerformer {
 
     private val defaultTaskTimerList = arrayListOf(
-        TaskTimer(3600000, Color.YELLOW, true),
-        TaskTimer(1200000, Color.rgb(225, 165, 0), true),
-        TaskTimer(0, Color.RED, true),
-        TaskTimer(-300000, Color.GRAY, true)
+        TaskTimer("Yellow", 3600000, Color.YELLOW, true),
+        TaskTimer("Orange", 1200000, Color.rgb(225, 165, 0), true),
+        TaskTimer("Red", 0, Color.RED, true),
+        TaskTimer("Gray", -300000, Color.GRAY, true)
     )
-    private var taskTimerLists = ArrayList(defaultTaskTimerList)
+    var taskTimerLists = ArrayList(defaultTaskTimerList)
     private var timers = ArrayList<ArrayList<Timer?>>()
     private var cardViews = ArrayList<CardView>()
 

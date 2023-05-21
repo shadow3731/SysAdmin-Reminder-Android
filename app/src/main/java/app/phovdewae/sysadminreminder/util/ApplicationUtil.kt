@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import app.phovdewae.sysadminreminder.view_activities.BottomNavigationViewActivity
 import app.phovdewae.sysadminreminder.view_activities.CardViewActivity
 import app.phovdewae.sysadminreminder.MainActivity
+import app.phovdewae.sysadminreminder.settings.Settings
 import app.phovdewae.sysadminreminder.tasks.TaskAdapter
 import app.phovdewae.sysadminreminder.tasks.TaskCloud
 import app.phovdewae.sysadminreminder.view_activities.RecyclerViewActivity
@@ -21,6 +22,7 @@ import java.util.Calendar
 import java.util.Locale
 
 var lastState = R.id.tasks
+var settings = Settings()
 
 fun View.enable() {
     isEnabled = true

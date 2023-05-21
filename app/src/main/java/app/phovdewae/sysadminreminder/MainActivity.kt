@@ -3,13 +3,13 @@ package app.phovdewae.sysadminreminder
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import app.phovdewae.sysadminreminder.settings.SettingsConfigurator
 import app.phovdewae.sysadminreminder.tasks.TaskAdapter
 import app.phovdewae.sysadminreminder.tasks.TaskCloud
-import app.phovdewae.sysadminreminder.util.counter
+import app.phovdewae.sysadminreminder.timers.TaskTimerPerformer
 import app.phovdewae.sysadminreminder.util.lastState
 import app.phovdewae.sysadminreminder.view_activities.BottomNavigationViewActivity
 import app.phovdewae.sysadminreminder.view_activities.CardViewActivity
@@ -19,8 +19,9 @@ import phovdewae.sysadminreminder.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
+    private val taskTimerPerformer = TaskTimerPerformer()
     private val taskCloud = TaskCloud()
-    private val taskAdapter = TaskAdapter(this, taskCloud)
+    private val taskAdapter = TaskAdapter(this, taskCloud, taskTimerPerformer)
     lateinit var cardViewActivity: CardViewActivity
     lateinit var bottomNavigationViewActivity: BottomNavigationViewActivity
     lateinit var recyclerViewActivity: RecyclerViewActivity
@@ -29,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        SettingsConfigurator().loadSettings(this, taskTimerPerformer, false)
 
         binding.apply {
             cardViewActivity = CardViewActivity(cvTaskMain)

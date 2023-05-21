@@ -2,7 +2,6 @@ package app.phovdewae.sysadminreminder.tasks
 
 import android.annotation.SuppressLint
 import android.graphics.Color
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -18,10 +17,12 @@ import app.phovdewae.sysadminreminder.util.makeBackground
 import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.TaskItemBinding
 
-class TaskAdapter(private val mainActivity: MainActivity, private val taskCloud: TaskCloud):
-    RecyclerView.Adapter<TaskAdapter.TaskHolder>() {
+class TaskAdapter(
+    private val mainActivity: MainActivity,
+    private val taskCloud: TaskCloud,
+    private val taskTimerPerformer: TaskTimerPerformer
+    ): RecyclerView.Adapter<TaskAdapter.TaskHolder>() {
 
-    private val taskTimerPerformer = TaskTimerPerformer()
     private var taskList = ArrayList<Task>()
     private var activeTaskList = ArrayList<Task>()
 

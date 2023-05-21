@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="db_connection_config_header">Database connection configuration</string>
+    <string name="db_connection_config_header">Database connection</string>
     <string name="db_address_hint">Address:</string>
     <string name="db_port_hint">Port:</string>
     <string name="db_name_hint">Database name:</string>

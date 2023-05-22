@@ -9,8 +9,8 @@ import phovdewae.sysadminreminder.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivitySettingsBinding
-    lateinit var settingsConfigurator: SettingsConfigurator
+    private lateinit var binding: ActivitySettingsBinding
+    private lateinit var settingsConfigurator: SettingsConfigurator
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +23,8 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setTitle(R.string.settings)
+
+        settingsConfigurator.displaySettings(binding)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -3,9 +3,13 @@ package app.phovdewae.sysadminreminder.util
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import app.phovdewae.sysadminreminder.view_activities.BottomNavigationViewActivity
 import app.phovdewae.sysadminreminder.view_activities.CardViewActivity
@@ -100,6 +104,20 @@ fun BottomNavigationView.move(toDefault: Boolean, activity: MainActivity) {
             else -> activity.getString(R.string.tasks_name)
         }
     }
+}
+
+fun EditText.enable() {
+    isFocusable = false
+    isClickable = true
+    makeBackground(R.color.white, this)
+    alpha = 1F
+}
+
+fun EditText.disable() {
+    isFocusable = false
+    isClickable = false
+    makeBackground(R.color.dark_grey, this)
+    alpha = 0.5F
 }
 
 fun EditText.prepareForDateTime(context: Context, isDate: Boolean) {

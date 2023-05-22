@@ -60,3 +60,12 @@ fun isValid(description: String, date: String, time: String): Boolean {
 
     return true
 }
+
+fun String.isEmptyField(isInputOperation: Boolean): String {
+    return if (isInputOperation) this.ifEmpty { "" }
+    else if (this == "null") "" else this
+}
+
+fun isNullablePassword(password: ByteArray?): String {
+    return password?.toString() ?: "null"
+}

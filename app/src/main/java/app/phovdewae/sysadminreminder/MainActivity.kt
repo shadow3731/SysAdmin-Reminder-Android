@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        SettingsConfigurator().loadSettings(this, taskTimerPerformer, false)
+        SettingsConfigurator().loadSettings(this, taskTimerPerformer)
 
         binding.apply {
             cardViewActivity = CardViewActivity(cvTaskMain)

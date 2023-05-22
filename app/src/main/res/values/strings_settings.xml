@@ -20,14 +20,14 @@
     <string name="cancel_settings_button">Cancel</string>
     <string name="reset_settings_button">Reset</string>
 
-    <string name="db_address_hint_input">Input address:</string>
-    <string name="db_port_hint_input">Input port:</string>
+    <string name="db_address_hint_input">Input address</string>
+    <string name="db_port_hint_input">Input port</string>
     <string name="db_name_hint_input">Input name:</string>
-    <string name="db_username_hint_input">Input username:</string>
-    <string name="db_password_hint_input">Input password:</string>
-    <string name="period_sync_time_hint_input">Input time:</string>
-    <string name="yellow_timer_hint_input">Input yellow timer:</string>
-    <string name="orange_timer_hint_input">Input orange timer:</string>
-    <string name="red_timer_hint_input">Input red timer:</string>
-    <string name="gray_timer_hint_input">Input gray timer:</string>
+    <string name="db_username_hint_input">Input username</string>
+    <string name="db_password_hint_input">Input password</string>
+    <string name="period_sync_time_hint_input">Input time</string>
+    <string name="yellow_timer_hint_input">Input time for the yellow timer</string>
+    <string name="orange_timer_hint_input">Input time for the orange timer</string>
+    <string name="red_timer_hint_input">Input time for the red timer</string>
+    <string name="gray_timer_hint_input">Input time for the gray timer</string>
 </resources>

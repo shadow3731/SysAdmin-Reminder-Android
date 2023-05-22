@@ -15,7 +15,7 @@ class TaskCloud {
     fun saveTasksToFile(tasks: ArrayList<Task>, context: Context): Boolean {
         return try {
             val directory = File(context.getExternalFilesDir(null), "task")
-            directory.mkdirs()
+            if (!directory.exists()) directory.mkdirs()
 
             val file = File(directory, fileName)
             val fileOutput = FileOutputStream(file)

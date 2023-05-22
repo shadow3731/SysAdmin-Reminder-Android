@@ -58,7 +58,7 @@
                 android:minLines="1"
                 android:padding="5dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/grey"
+                android:textColorHint="@color/light_gray"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -95,7 +95,7 @@
                     android:inputType="date"
                     android:padding="5dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/grey"
+                    android:textColorHint="@color/light_gray"
                     android:textSize="16sp" />
 
                 <EditText
@@ -111,7 +111,7 @@
                     android:inputType="time"
                     android:padding="5dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/grey"
+                    android:textColorHint="@color/light_gray"
                     android:textSize="16sp" />
             </LinearLayout>
 

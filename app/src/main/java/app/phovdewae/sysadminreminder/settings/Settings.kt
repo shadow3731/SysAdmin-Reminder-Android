@@ -1,12 +1,14 @@
 package app.phovdewae.sysadminreminder.settings
 
+import app.phovdewae.sysadminreminder.util.isNullablePassword
+
 class Settings(
     var databaseConnectionEnabled: Boolean?,
     var databaseAddress: String?,
     var databasePort: String?,
     var databaseName: String?,
     var databaseUsername: String?,
-    var databasePassword: CharArray?,
+    var databasePassword: ByteArray?,
     var databaseSyncTime: Int?,
     var timerYellowEnabled: Boolean?,
     var timerYellowValue: Int?,
@@ -36,13 +38,32 @@ class Settings(
         null
     )
 
+    fun getDefault(): Settings {
+        return Settings(
+            false,
+            "null",
+            "null",
+            "null",
+            "null",
+            null,
+            2,
+            true,
+            60,
+            true,
+            20,
+            true,
+            0,
+            true,
+            -5)
+    }
+
     fun toStringForFile(): String {
         return "||${databaseConnectionEnabled.toString()}" +
                 "||$databaseAddress" +
                 "||$databasePort" +
                 "||$databaseName" +
                 "||$databaseUsername" +
-                "||$databasePassword" +
+                "||${isNullablePassword(databasePassword)}" +
                 "||$databaseSyncTime" +
                 "||$timerYellowEnabled" +
                 "||$timerYellowValue" +
@@ -52,5 +73,24 @@ class Settings(
                 "||$timerRedValue" +
                 "||$timerGrayEnabled" +
                 "||$timerGrayValue"
+    }
+
+    override fun toString(): String {
+        return "Settings(" +
+                "$databaseConnectionEnabled, " +
+                "$databaseAddress, " +
+                "$databasePort, " +
+                "$databaseName, " +
+                "$databaseUsername, " +
+                "$databasePassword, " +
+                "$databaseSyncTime, " +
+                "$timerYellowEnabled, " +
+                "$timerYellowValue, " +
+                "$timerOrangeEnabled, " +
+                "$timerOrangeValue, " +
+                "$timerRedEnabled, " +
+                "$timerRedValue, " +
+                "$timerGrayEnabled, " +
+                "$timerGrayValue)"
     }
 }

@@ -71,7 +71,7 @@
                     android:paddingStart="3dp"
                     android:paddingEnd="3dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/light_gray"
                     android:textSize="14sp"
                     tools:ignore="TouchTargetSizeCheck,VisualLintTextFieldSize" />
             </LinearLayout>
@@ -111,7 +111,7 @@
                     android:paddingStart="3dp"
                     android:paddingEnd="3dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/light_gray"
                     android:textSize="14sp"
                     tools:ignore="TouchTargetSizeCheck,VisualLintTextFieldSize" />
             </LinearLayout>
@@ -151,7 +151,7 @@
                     android:paddingStart="3dp"
                     android:paddingEnd="3dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/light_gray"
                     android:textSize="14sp"
                     tools:ignore="TouchTargetSizeCheck,VisualLintTextFieldSize" />
             </LinearLayout>
@@ -191,7 +191,7 @@
                     android:paddingStart="3dp"
                     android:paddingEnd="3dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/light_gray"
                     android:textSize="14sp"
                     tools:ignore="TouchTargetSizeCheck,VisualLintTextFieldSize" />
             </LinearLayout>
@@ -231,7 +231,7 @@
                     android:paddingStart="3dp"
                     android:paddingEnd="3dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/light_gray"
                     android:textSize="14sp"
                     tools:ignore="TouchTargetSizeCheck,VisualLintTextFieldSize" />
             </LinearLayout>
@@ -286,7 +286,7 @@
                     android:paddingStart="3dp"
                     android:paddingEnd="3dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/light_gray"
                     android:textSize="14sp"
                     tools:ignore="TouchTargetSizeCheck,VisualLintTextFieldSize" />
             </LinearLayout>
@@ -341,7 +341,7 @@
                     android:paddingStart="3dp"
                     android:paddingEnd="3dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/light_gray"
                     android:textSize="14sp"
                     tools:ignore="TouchTargetSizeCheck,VisualLintTextFieldSize" />
 
@@ -389,7 +389,7 @@
                     android:paddingStart="3dp"
                     android:paddingEnd="3dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/light_gray"
                     android:textSize="14sp"
                     tools:ignore="TouchTargetSizeCheck,VisualLintTextFieldSize" />
 
@@ -437,7 +437,7 @@
                     android:paddingStart="3dp"
                     android:paddingEnd="3dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/light_gray"
                     android:textSize="14sp"
                     tools:ignore="TouchTargetSizeCheck,VisualLintTextFieldSize" />
 
@@ -484,7 +484,7 @@
                     android:paddingStart="3dp"
                     android:paddingEnd="3dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/light_gray"
                     android:textSize="14sp"
                     tools:ignore="TouchTargetSizeCheck,VisualLintTextFieldSize" />
 

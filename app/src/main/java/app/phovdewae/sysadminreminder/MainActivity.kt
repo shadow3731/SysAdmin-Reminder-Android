@@ -57,7 +57,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.refresh -> Toast.makeText(this, R.string.refresh, Toast.LENGTH_SHORT).show()
-            R.id.settings -> startActivity(Intent(this, SettingsActivity::class.java))
+            R.id.settings -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                intent.putExtra("taskTimerPerformer", taskTimerPerformer)
+                startActivity(intent)
+            }
         }
         return true
     }

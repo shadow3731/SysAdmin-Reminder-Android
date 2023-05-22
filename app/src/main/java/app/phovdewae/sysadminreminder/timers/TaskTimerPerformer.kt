@@ -1,13 +1,15 @@
 package app.phovdewae.sysadminreminder.timers
 
 import android.graphics.Color
+import android.os.Parcelable
 import androidx.cardview.widget.CardView
 import app.phovdewae.sysadminreminder.util.makeBackground
+import java.io.Serializable
 import java.util.Date
 import java.util.Timer
 import java.util.TimerTask
 
-class TaskTimerPerformer {
+class TaskTimerPerformer: Serializable {
 
     private val defaultTaskTimerList = arrayListOf(
         TaskTimer("Yellow", 3600000, Color.YELLOW, true),

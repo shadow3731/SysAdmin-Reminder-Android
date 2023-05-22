@@ -3,11 +3,9 @@ package app.phovdewae.sysadminreminder.util
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -106,18 +104,12 @@ fun BottomNavigationView.move(toDefault: Boolean, activity: MainActivity) {
     }
 }
 
-fun EditText.enable() {
-    isFocusable = false
-    isClickable = true
-    makeBackground(R.color.white, this)
-    alpha = 1F
+fun EditText.enable(context: Context) {
+    enableElement(context, this)
 }
 
 fun EditText.disable() {
-    isFocusable = false
-    isClickable = false
-    makeBackground(R.color.dark_grey, this)
-    alpha = 0.5F
+    disableElement(this)
 }
 
 fun EditText.prepareForDateTime(context: Context, isDate: Boolean) {
@@ -164,4 +156,28 @@ private fun getTimePickerDialog(editText: EditText, context: Context): TimePicke
         Calendar.getInstance().get(Calendar.MINUTE),
         true
     )
+}
+
+fun Button.enable(context: Context) {
+    enableElement(context, this)
+}
+
+fun Button.disable() {
+    disableElement(this)
+}
+
+private fun enableElement(context: Context, element: View) {
+    element.isEnabled = true
+    element.isFocusable = false
+    element.isClickable = true
+    element.isFocusableInTouchMode = true
+    element.background = ContextCompat.getDrawable(context, R.drawable.background)
+    element.alpha = 1F
+}
+
+private fun disableElement(element: View) {
+    element.isFocusable = false
+    element.isClickable = false
+    makeBackground(R.color.dark_grey, element)
+    element.alpha = 0.5F
 }

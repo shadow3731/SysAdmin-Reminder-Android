@@ -9,18 +9,17 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import app.phovdewae.sysadminreminder.MainActivity
-import app.phovdewae.sysadminreminder.timers.TaskTimerPerformer
 import app.phovdewae.sysadminreminder.util.counter
 import app.phovdewae.sysadminreminder.util.dateTimeToString
 import app.phovdewae.sysadminreminder.util.lastState
 import app.phovdewae.sysadminreminder.util.makeBackground
+import app.phovdewae.sysadminreminder.util.taskTimerPerformer
 import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.TaskItemBinding
 
 class TaskAdapter(
     private val mainActivity: MainActivity,
-    private val taskCloud: TaskCloud,
-    private val taskTimerPerformer: TaskTimerPerformer
+    private val taskCloud: TaskCloud
     ): RecyclerView.Adapter<TaskAdapter.TaskHolder>() {
 
     private var taskList = ArrayList<Task>()

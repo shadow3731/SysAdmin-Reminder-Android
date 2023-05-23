@@ -57,24 +57,6 @@ class Settings(
             -5)
     }
 
-    fun toStringForFile(): String {
-        return "||${databaseConnectionEnabled.toString()}" +
-                "||$databaseAddress" +
-                "||$databasePort" +
-                "||$databaseName" +
-                "||$databaseUsername" +
-                "||${isNullablePassword(databasePassword)}" +
-                "||$databaseSyncTime" +
-                "||$timerYellowEnabled" +
-                "||$timerYellowValue" +
-                "||$timerOrangeEnabled" +
-                "||$timerOrangeValue" +
-                "||$timerRedEnabled" +
-                "||$timerRedValue" +
-                "||$timerGrayEnabled" +
-                "||$timerGrayValue"
-    }
-
     override fun toString(): String {
         return "Settings(" +
                 "$databaseConnectionEnabled, " +

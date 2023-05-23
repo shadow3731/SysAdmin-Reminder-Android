@@ -1,6 +1,7 @@
 package app.phovdewae.sysadminreminder.util
 
 import android.content.Context
+import app.phovdewae.sysadminreminder.timers.TaskTimerPerformer
 import phovdewae.sysadminreminder.R
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -10,6 +11,7 @@ import java.util.Locale
 var counter = 0
 var datePattern = "dd.MM.yyyy"
 var timePattern = "HH:mm"
+var taskTimerPerformer = TaskTimerPerformer()
 
 fun dateTimeToString(srcDateTime: Date): String {
     val dateTimeFormat = SimpleDateFormat("$datePattern $timePattern", Locale.getDefault())
@@ -62,7 +64,7 @@ fun isValid(description: String, date: String, time: String): Boolean {
 }
 
 fun String.isEmptyField(isInputOperation: Boolean): String {
-    return if (isInputOperation) this.ifEmpty { "" }
+    return if (isInputOperation) this.ifEmpty { "null" }
     else if (this == "null") "" else this
 }
 

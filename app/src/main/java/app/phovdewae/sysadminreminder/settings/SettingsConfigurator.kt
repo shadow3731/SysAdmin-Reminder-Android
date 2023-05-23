@@ -1,34 +1,32 @@
 package app.phovdewae.sysadminreminder.settings
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.text.Editable
 import android.util.Base64
+import android.util.Log
 import android.widget.Toast
 import app.phovdewae.sysadminreminder.SettingsActivity
 import app.phovdewae.sysadminreminder.timers.TaskTimer
-import app.phovdewae.sysadminreminder.timers.TaskTimerPerformer
 import app.phovdewae.sysadminreminder.util.disable
 import app.phovdewae.sysadminreminder.util.enable
 import app.phovdewae.sysadminreminder.util.settings
+import app.phovdewae.sysadminreminder.util.taskTimerPerformer
 import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.ActivitySettingsBinding
 
 class SettingsConfigurator {
 
-    private fun saveSettings(settingsActivity: SettingsActivity) {
-        val settingsCloud = SettingsCloud()
-        settingsCloud.save(settingsActivity, settings)
+    private fun saveSettings(settingsActivity: SettingsActivity): Boolean {
+        return SettingsCloud().save(settingsActivity, settings)
     }
 
-    fun loadSettings(
-        context: Context,
-        taskTimerPerformer: TaskTimerPerformer,
-        toLoadDefault: Boolean = false
-    ) {
-        val settingsCloud = SettingsCloud()
-        settings = settingsCloud.load(context, toLoadDefault)!!
+    fun loadSettings(context: Context, toLoadDefault: Boolean = false): Settings {
+        return SettingsCloud().load(context, toLoadDefault)!!
+    }
 
+    fun applySettings() {
         val taskTimers = ArrayList<TaskTimer>()
         taskTimers.add(TaskTimer(
             "Yellow",
@@ -59,33 +57,35 @@ class SettingsConfigurator {
         taskTimerPerformer.onChangeTaskTimersDuration()
     }
 
-    fun displaySettings(binding: ActivitySettingsBinding) {
+    fun displaySettings(binding: ActivitySettingsBinding, displayableSettings: Settings) {
         binding.apply {
-            swDbConnSettings.isChecked = settings.databaseConnectionEnabled!!
+            swDbConnSettings.isChecked = displayableSettings.databaseConnectionEnabled!!
             etDbAddress.text = Editable.Factory.getInstance()
-                .newEditable(settings.databaseAddress!!)
+                .newEditable(displayableSettings.databaseAddress!!)
             etDbPort.text = Editable.Factory.getInstance()
-                .newEditable(settings.databasePort!!)
+                .newEditable(displayableSettings.databasePort!!)
             etDbName.text = Editable.Factory.getInstance()
-                .newEditable(settings.databaseName!!)
+                .newEditable(displayableSettings.databaseName!!)
             etDbUsername.text = Editable.Factory.getInstance()
-                .newEditable(settings.databaseUsername!!)
-            etDbPassword.text = Editable.Factory.getInstance()
-                .newEditable(Base64.decode(settings.databasePassword!!, Base64.DEFAULT).toString())
+                .newEditable(displayableSettings.databaseUsername!!)
+            if (displayableSettings.databasePassword != null)
+                etDbPassword.text = Editable.Factory.getInstance()
+                    .newEditable(Base64.decode(displayableSettings.databasePassword!!, Base64.DEFAULT)
+                        .toString())
             etDbSyncTime.text = Editable.Factory.getInstance()
-                .newEditable(settings.databaseSyncTime!!.toString())
-            swTimersYellow.isChecked = settings.timerYellowEnabled!!
+                .newEditable(displayableSettings.databaseSyncTime!!.toString())
+            swTimersYellow.isChecked = displayableSettings.timerYellowEnabled!!
             etTimersYellow.text = Editable.Factory.getInstance()
-                .newEditable(settings.timerYellowValue!!.toString())
-            swTimersOrange.isChecked = settings.timerOrangeEnabled!!
+                .newEditable(displayableSettings.timerYellowValue!!.toString())
+            swTimersOrange.isChecked = displayableSettings.timerOrangeEnabled!!
             etTimersOrange.text = Editable.Factory.getInstance()
-                .newEditable(settings.timerOrangeValue!!.toString())
-            swTimersRed.isChecked = settings.timerRedEnabled!!
+                .newEditable(displayableSettings.timerOrangeValue!!.toString())
+            swTimersRed.isChecked = displayableSettings.timerRedEnabled!!
             etTimersRed.text = Editable.Factory.getInstance()
-                .newEditable(settings.timerRedValue!!.toString())
-            swTimersGray.isChecked = settings.timerGrayEnabled!!
+                .newEditable(displayableSettings.timerRedValue!!.toString())
+            swTimersGray.isChecked = displayableSettings.timerGrayEnabled!!
             etTimersGray.text = Editable.Factory.getInstance()
-                .newEditable(settings.timerGrayValue!!.toString())
+                .newEditable(displayableSettings.timerGrayValue!!.toString())
 
             if (!swDbConnSettings.isChecked) {
                 etDbAddress.disable()
@@ -104,11 +104,7 @@ class SettingsConfigurator {
         }
     }
 
-    fun listenToSettings(
-        settingsActivity: SettingsActivity,
-        binding: ActivitySettingsBinding,
-        taskTimerPerformer: TaskTimerPerformer
-    ) {
+    fun listenToSettings(binding: ActivitySettingsBinding, settingsActivity: SettingsActivity) {
         binding.apply {
             swDbConnSettings.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
@@ -150,38 +146,53 @@ class SettingsConfigurator {
 
             bSaveSettings.setOnClickListener {
                 if (
-                    etDbSyncTime.toString().toIntOrNull() != null
-                    && etDbSyncTime.toString().toInt() < 1
-                    && etTimersYellow.toString().toIntOrNull() != null
-                    && etTimersOrange.toString().toIntOrNull() != null
-                    && etTimersGray.toString().toIntOrNull() != null
+                    etDbSyncTime.text.toString().toIntOrNull() != null
+                    && etDbSyncTime.text.toString().toInt() > 0
+                    && etTimersYellow.text.toString().toIntOrNull() != null
+                    && etTimersOrange.text.toString().toIntOrNull() != null
+                    && etTimersRed.text.toString().toIntOrNull() != null
+                    && etTimersGray.text.toString().toIntOrNull() != null
                 ) {
                     settings.databaseConnectionEnabled = swDbConnSettings.isChecked
-                    settings.databaseAddress = if (etDbAddress.toString() == "") "null" else etDbAddress.toString()
-                    settings.databasePort = if (etDbPort.toString() == "") "null" else etDbPort.toString()
-                    settings.databaseName = if (etDbName.toString() == "") "null" else etDbName.toString()
-                    settings.databaseUsername = if (etDbUsername.toString() == "") "null" else etDbUsername.toString()
-                    settings.databasePassword = if (etDbPassword.toString() == "") null
-                    else Base64.encode(etDbPassword.toString().toByteArray(), Base64.DEFAULT)
-                    settings.databaseSyncTime = etDbSyncTime.toString().toInt()
+                    settings.databaseAddress = if (etDbAddress.text.isNullOrEmpty()) ""
+                    else etDbAddress.text.toString()
+                    settings.databasePort = if (etDbPort.text.isNullOrEmpty()) ""
+                    else etDbPort.text.toString()
+                    settings.databaseName = if (etDbName.text.isNullOrEmpty()) ""
+                    else etDbName.text.toString()
+                    settings.databaseUsername = if (etDbUsername.text.isNullOrEmpty()) ""
+                    else etDbUsername.text.toString()
+                    settings.databasePassword = if (etDbPassword.text.isNullOrEmpty()) null
+                    else Base64.encode(etDbPassword.text.toString().toByteArray(), Base64.DEFAULT)
+                    settings.databaseSyncTime = etDbSyncTime.text.toString().toInt()
                     settings.timerYellowEnabled = swTimersYellow.isChecked
-                    settings.timerYellowValue = etTimersYellow.toString().toInt()
+                    settings.timerYellowValue = etTimersYellow.text.toString().toInt()
                     settings.timerOrangeEnabled = swTimersOrange.isChecked
-                    settings.timerOrangeValue = etTimersOrange.toString().toInt()
+                    settings.timerOrangeValue = etTimersOrange.text.toString().toInt()
                     settings.timerRedEnabled = swTimersRed.isChecked
-                    settings.timerRedValue = etTimersRed.toString().toInt()
+                    settings.timerRedValue = etTimersRed.text.toString().toInt()
                     settings.timerGrayEnabled = swTimersGray.isChecked
-                    settings.timerGrayValue = etTimersGray.toString().toInt()
+                    settings.timerGrayValue = etTimersGray.text.toString().toInt()
+
+                    Log.d("MyTag", settings.toString())
 
                     saveSettings(settingsActivity)
-                    loadSettings(settingsActivity, taskTimerPerformer)
+                    applySettings()
+                    settingsActivity.setResult(Activity.RESULT_OK)
                     settingsActivity.finish()
                 } else {
                     Toast.makeText(settingsActivity, R.string.invalid_data, Toast.LENGTH_SHORT).show()
                 }
             }
 
-            bCancelSettings.setOnClickListener { settingsActivity.finish() }
+            bCancelSettings.setOnClickListener {
+                settingsActivity.setResult(Activity.RESULT_CANCELED)
+                settingsActivity.finish()
+            }
+
+            bResetSettings.setOnClickListener {
+                displaySettings(binding, loadSettings(settingsActivity, true))
+            }
         }
     }
 }

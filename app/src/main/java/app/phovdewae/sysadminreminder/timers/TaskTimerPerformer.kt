@@ -1,7 +1,6 @@
 package app.phovdewae.sysadminreminder.timers
 
 import android.graphics.Color
-import android.os.Parcelable
 import androidx.cardview.widget.CardView
 import app.phovdewae.sysadminreminder.util.makeBackground
 import java.io.Serializable

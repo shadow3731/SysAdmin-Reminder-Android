@@ -1,10 +1,8 @@
 package app.phovdewae.sysadminreminder.view_activities
 
-import android.util.Log
 import app.phovdewae.sysadminreminder.MainActivity
 import app.phovdewae.sysadminreminder.tasks.TaskAdapter
 import app.phovdewae.sysadminreminder.tasks.TaskCloud
-import app.phovdewae.sysadminreminder.util.counter
 import app.phovdewae.sysadminreminder.util.lastState
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import phovdewae.sysadminreminder.R

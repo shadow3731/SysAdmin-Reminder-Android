@@ -2,6 +2,7 @@ package app.phovdewae.sysadminreminder.settings
 
 import android.content.Context
 import app.phovdewae.sysadminreminder.util.isEmptyField
+import app.phovdewae.sysadminreminder.util.isNullablePassword
 import java.io.File
 import java.io.FileOutputStream
 
@@ -10,7 +11,7 @@ class SettingsCloud {
     private val fileName = "settings.txt"
     private val fileNameDefault = "default_settings.txt"
 
-    fun save(context: Context, settings: Settings, toSaveDefault: Boolean = false): Boolean {
+    fun save(context: Context, savableSettings: Settings, toSaveDefault: Boolean = false): Boolean {
         return try {
             val directory = File(context.getExternalFilesDir(null), "settings")
             if (!directory.exists()) directory.mkdirs()
@@ -19,7 +20,7 @@ class SettingsCloud {
             else File(directory, fileNameDefault)
 
             val fileOutput = FileOutputStream(file)
-            fileOutput.write(settings.toStringForFile().toByteArray())
+            fileOutput.write(settingsToString(savableSettings).toByteArray())
             fileOutput.close()
 
             true
@@ -51,6 +52,24 @@ class SettingsCloud {
         }
     }
 
+    private fun settingsToString(savableSettings: Settings): String {
+        return "||${savableSettings.databaseConnectionEnabled}" +
+                "||${savableSettings.databaseAddress?.isEmptyField(true)}" +
+                "||${savableSettings.databasePort?.isEmptyField(true)}" +
+                "||${savableSettings.databaseName?.isEmptyField(true)}" +
+                "||${savableSettings.databaseUsername?.isEmptyField(true)}" +
+                "||${isNullablePassword(savableSettings.databasePassword)}" +
+                "||${savableSettings.databaseSyncTime}" +
+                "||${savableSettings.timerYellowEnabled}" +
+                "||${savableSettings.timerYellowValue}" +
+                "||${savableSettings.timerOrangeEnabled}" +
+                "||${savableSettings.timerOrangeValue}" +
+                "||${savableSettings.timerRedEnabled}" +
+                "||${savableSettings.timerRedValue}" +
+                "||${savableSettings.timerGrayEnabled}" +
+                "||${savableSettings.timerGrayValue}"
+    }
+
     private fun stringToSettings(rawString: String): Settings {
         val pattern = Regex("[^|]+")
         val matchResult = pattern.findAll(rawString)
@@ -66,7 +85,7 @@ class SettingsCloud {
                 4 -> settings.databaseUsername = match.value.isEmptyField(false)
                 5 -> {
                     val rawPassword = match.value.isEmptyField(false)
-                    settings.databasePassword = if (rawPassword == "null") null
+                    settings.databasePassword = if (rawPassword == "") null
                     else rawPassword.toByteArray()
                 }
                 6 -> settings.databaseSyncTime = match.value.toInt()

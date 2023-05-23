@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -36,8 +35,6 @@ class MainActivity : AppCompatActivity() {
         val settingsConfigurator = SettingsConfigurator()
         settings = settingsConfigurator.loadSettings(this)
         settingsConfigurator.applySettings()
-
-
 
         binding.apply {
             cardViewActivity = CardViewActivity(cvTaskMain)

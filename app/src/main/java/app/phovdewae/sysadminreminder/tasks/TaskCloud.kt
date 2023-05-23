@@ -1,7 +1,6 @@
 package app.phovdewae.sysadminreminder.tasks
 
 import android.content.Context
-import app.phovdewae.sysadminreminder.util.counter
 import app.phovdewae.sysadminreminder.util.stringToDateTime
 import java.io.File
 import java.io.FileOutputStream

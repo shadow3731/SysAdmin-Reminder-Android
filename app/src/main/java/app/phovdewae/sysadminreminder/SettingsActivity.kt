@@ -1,12 +1,10 @@
 package app.phovdewae.sysadminreminder
 
 import android.app.Activity
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import app.phovdewae.sysadminreminder.settings.SettingsConfigurator
-import app.phovdewae.sysadminreminder.timers.TaskTimerPerformer
 import app.phovdewae.sysadminreminder.util.settings
 import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.ActivitySettingsBinding

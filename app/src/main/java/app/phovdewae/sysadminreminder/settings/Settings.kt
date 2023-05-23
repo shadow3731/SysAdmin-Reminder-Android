@@ -1,7 +1,5 @@
 package app.phovdewae.sysadminreminder.settings
 
-import app.phovdewae.sysadminreminder.util.isNullablePassword
-
 class Settings(
     var databaseConnectionEnabled: Boolean?,
     var databaseAddress: String?,

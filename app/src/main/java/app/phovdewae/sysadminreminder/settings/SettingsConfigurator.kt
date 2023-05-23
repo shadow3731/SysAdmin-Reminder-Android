@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Color
 import android.text.Editable
 import android.util.Base64
-import android.util.Log
 import android.widget.Toast
 import app.phovdewae.sysadminreminder.SettingsActivity
 import app.phovdewae.sysadminreminder.timers.TaskTimer
@@ -104,7 +103,10 @@ class SettingsConfigurator {
         }
     }
 
-    fun listenToSettings(binding: ActivitySettingsBinding, settingsActivity: SettingsActivity) {
+    fun listenToSettings(
+        binding: ActivitySettingsBinding,
+        settingsActivity: SettingsActivity
+    ) {
         binding.apply {
             swDbConnSettings.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
@@ -173,8 +175,6 @@ class SettingsConfigurator {
                     settings.timerRedValue = etTimersRed.text.toString().toInt()
                     settings.timerGrayEnabled = swTimersGray.isChecked
                     settings.timerGrayValue = etTimersGray.text.toString().toInt()
-
-                    Log.d("MyTag", settings.toString())
 
                     saveSettings(settingsActivity)
                     applySettings()

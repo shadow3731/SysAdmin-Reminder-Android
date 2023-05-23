@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import app.phovdewae.sysadminreminder.notifications.NotificationConfigurator
 import app.phovdewae.sysadminreminder.settings.SettingsConfigurator
 import app.phovdewae.sysadminreminder.tasks.TaskAdapter
 import app.phovdewae.sysadminreminder.tasks.TaskCloud
@@ -26,11 +27,15 @@ class MainActivity : AppCompatActivity() {
     lateinit var cardViewActivity: CardViewActivity
     lateinit var bottomNavigationViewActivity: BottomNavigationViewActivity
     lateinit var recyclerViewActivity: RecyclerViewActivity
+    private val notificationConfigurator = NotificationConfigurator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        notificationConfigurator.createNotificationChannel(this)
+        notificationConfigurator.createNotification(this)
 
         val settingsConfigurator = SettingsConfigurator()
         settings = settingsConfigurator.loadSettings(this)

@@ -8,7 +8,72 @@
     android:background="@color/white"
     tools:context="app.phovdewae.sysadminreminder.SettingsActivity">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_help"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="150dp"
+        android:background="@color/white"
+        android:visibility="gone"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_help_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="0"
+                android:text="@string/help_hint"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_help_desc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/b_help_close"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="0"
+                android:background="@drawable/background"
+                android:text="@string/close_help"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
     <ScrollView
+        android:id="@+id/sv_settings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,12 +93,13 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
                 android:text="@string/db_connection_config_header"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:track="@drawable/switch_track_background"
                 android:thumb="@drawable/switch_thumb_background"
+                app:track="@drawable/switch_track_background"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <LinearLayout
@@ -237,20 +303,39 @@
                     tools:ignore="TouchTargetSizeCheck,VisualLintTextFieldSize" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_db_sync_settings"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:text="@string/period_sync_header"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_db_sync_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/period_sync_header"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+
+                <ImageButton
+                    android:id="@+id/ib_help_db_sync"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="12"
+                    android:background="@drawable/background"
+                    android:contentDescription="@string/help_hint"
+                    app:srcCompat="@drawable/ic_help_24"
+                    tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linearLayout6"
@@ -292,20 +377,39 @@
                     tools:ignore="TouchTargetSizeCheck,VisualLintTextFieldSize" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_timers_settings"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:text="@string/timers_activation_moment_header"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_timers_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/timers_activation_moment_header"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+
+                <ImageButton
+                    android:id="@+id/ib_help_timers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="12"
+                    android:background="@drawable/background"
+                    android:contentDescription="@string/help_hint"
+                    app:srcCompat="@drawable/ic_help_24"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linearLayout7"
@@ -351,9 +455,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2.1"
-                    tools:ignore="TouchTargetSizeCheck,VisualLintButtonSize"
+                    android:thumb="@drawable/switch_thumb_background"
                     app:track="@drawable/switch_track_background"
-                    android:thumb="@drawable/switch_thumb_background" />
+                    tools:ignore="TouchTargetSizeCheck,VisualLintButtonSize,DuplicateSpeakableTextCheck" />
             </LinearLayout>
 
             <LinearLayout
@@ -400,9 +504,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2.1"
-                    tools:ignore="TouchTargetSizeCheck,VisualLintButtonSize"
+                    android:thumb="@drawable/switch_thumb_background"
                     app:track="@drawable/switch_track_background"
-                    android:thumb="@drawable/switch_thumb_background" />
+                    tools:ignore="TouchTargetSizeCheck,VisualLintButtonSize" />
             </LinearLayout>
 
             <LinearLayout
@@ -449,9 +553,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2.1"
-                    tools:ignore="TouchTargetSizeCheck,VisualLintButtonSize"
+                    android:thumb="@drawable/switch_thumb_background"
                     app:track="@drawable/switch_track_background"
-                    android:thumb="@drawable/switch_thumb_background" />
+                    tools:ignore="TouchTargetSizeCheck,VisualLintButtonSize" />
             </LinearLayout>
 
             <LinearLayout
@@ -497,13 +601,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2.1"
-                    tools:ignore="TouchTargetSizeCheck,VisualLintButtonSize"
+                    android:thumb="@drawable/switch_thumb_background"
                     app:track="@drawable/switch_track_background"
-                    android:thumb="@drawable/switch_thumb_background" />
+                    tools:ignore="TouchTargetSizeCheck,VisualLintButtonSize" />
             </LinearLayout>
 
             <Button
-                android:id="@+id/b_upload_tasks"
+                android:id="@+id/b_export_tasks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -516,7 +620,7 @@
                 android:textSize="16sp" />
 
             <Button
-                android:id="@+id/b_download_tasks"
+                android:id="@+id/b_import_tasks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"

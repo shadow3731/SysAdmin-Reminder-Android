@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="db_sync_help">This parameter responses for a period of time when this application will automatically connect to the database and download all the tasks containing in the database. This parameter must be a positive value.</string>
+    <string name="db_timers_help">These parameters response for notifying about the tasks. A time value (in minutes) must be written in the text field, what means a moment of time when the application will notify about the task. The positive value means notifying before the task occurred, 0 means notifying at the moment of execution the task, the negative value means notifying after the task occurred. Disabling the timer means both the timer will not launch and the notification will not be shown.</string>
+    <string name="close_help">Close</string>
+
     <string name="db_connection_config_header">Database connection</string>
     <string name="db_address_hint">Address:</string>
     <string name="db_port_hint">Port:</string>
@@ -14,11 +18,12 @@
     <string name="red_timer_hint">Red:</string>
     <string name="gray_timer_hint">Gray:</string>
     <string name="timer_activation_node">A negative value of time means the timer will expire after the event occurs.</string>
-    <string name="upload_tasks_button">Upload tasks to database</string>
-    <string name="download_tasks_button">Download tasks from database</string>
+    <string name="upload_tasks_button">Export tasks to database</string>
+    <string name="download_tasks_button">Import tasks from database</string>
     <string name="save_settings_button">Save</string>
     <string name="cancel_settings_button">Cancel</string>
     <string name="reset_settings_button">Reset</string>
+    <string name="help_hint">Help</string>
 
     <string name="db_address_hint_input">Input address</string>
     <string name="db_port_hint_input">Input port</string>

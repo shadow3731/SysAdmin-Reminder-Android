@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import android.text.Editable
 import android.util.Base64
+import android.view.View
 import android.widget.Toast
 import app.phovdewae.sysadminreminder.SettingsActivity
 import app.phovdewae.sysadminreminder.timers.TaskTimer
@@ -93,8 +94,8 @@ class SettingsConfigurator {
                 etDbUsername.disable()
                 etDbPassword.disable()
                 etDbSyncTime.disable()
-                bUploadTasks.disable()
-                bDownloadTasks.disable()
+                bExportTasks.disable()
+                bImportTasks.disable()
             }
             if (!swTimersYellow.isChecked) etTimersYellow.disable()
             if (!swTimersOrange.isChecked) etTimersOrange.disable()
@@ -116,8 +117,8 @@ class SettingsConfigurator {
                     etDbUsername.enable(settingsActivity)
                     etDbPassword.enable(settingsActivity)
                     etDbSyncTime.enable(settingsActivity)
-                    bUploadTasks.enable(settingsActivity)
-                    bDownloadTasks.enable(settingsActivity)
+                    bExportTasks.enable(settingsActivity)
+                    bImportTasks.enable(settingsActivity)
                 } else {
                     etDbAddress.disable()
                     etDbPort.disable()
@@ -125,8 +126,8 @@ class SettingsConfigurator {
                     etDbUsername.disable()
                     etDbPassword.disable()
                     etDbSyncTime.disable()
-                    bUploadTasks.disable()
-                    bDownloadTasks.disable()
+                    bExportTasks.disable()
+                    bImportTasks.disable()
                 }
             }
 
@@ -144,6 +145,30 @@ class SettingsConfigurator {
 
             swTimersGray.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) etTimersGray.enable(settingsActivity) else etTimersGray.disable()
+            }
+
+            ibHelpDbSync.setOnClickListener {
+                cvHelp.visibility = View.VISIBLE
+                tvHelpDesc.text = settingsActivity.getString(R.string.db_sync_help)
+                svSettings.disable()
+
+                bHelpClose.setOnClickListener {
+                    cvHelp.visibility = View.GONE
+                    tvHelpDesc.text = ""
+                    svSettings.enable()
+                }
+            }
+
+            ibHelpTimers.setOnClickListener {
+                cvHelp.visibility = View.VISIBLE
+                tvHelpDesc.text = settingsActivity.getString(R.string.db_timers_help)
+                svSettings.disable()
+
+                bHelpClose.setOnClickListener {
+                    cvHelp.visibility = View.GONE
+                    tvHelpDesc.text = ""
+                    svSettings.enable()
+                }
             }
 
             bSaveSettings.setOnClickListener {

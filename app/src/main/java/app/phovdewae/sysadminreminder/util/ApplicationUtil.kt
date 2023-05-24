@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -30,14 +31,27 @@ fun View.enable() {
     isEnabled = true
     isClickable = true
     isFocusable = true
+    isFocusableInTouchMode = true
     alpha = 1F
+
+    if (this is ViewGroup) {
+        for (i in 0 until this.childCount) {
+            this.getChildAt(i).enable()
+        }
+    }
 }
 
 fun View.disable() {
     isEnabled = false
     isClickable = false
     isFocusable = false
-    alpha = 0.5F
+    alpha = 0.75F
+
+    if (this is ViewGroup) {
+        for (i in 0 until this.childCount) {
+            this.getChildAt(i).disable()
+        }
+    }
 }
 
 fun View.hideKeyboard(context: Context) {

@@ -58,9 +58,9 @@ class NotificationConfigurator {
             else -> context.getString(R.string.notification_before_coming)
         }
         val notificationText = when (executionCode) {
-            ExecutionCodes.BEFORE_EXECUTION -> "In $minutes $minutesDefinition: $description"
+            ExecutionCodes.BEFORE_EXECUTION -> "$minutes $minutesDefinition left: $description"
             ExecutionCodes.TIME_EXECUTION -> "Now: $description"
-            ExecutionCodes.AFTER_EXECUTION -> "${-minutes} $minutesDefinition ago: $description"
+            ExecutionCodes.AFTER_EXECUTION -> "${-(minutes)} $minutesDefinition passed: $description"
             else -> "Now: $description"
         }
 

@@ -14,6 +14,7 @@ import app.phovdewae.sysadminreminder.tasks.TaskAdapter
 import app.phovdewae.sysadminreminder.tasks.TaskCloud
 import app.phovdewae.sysadminreminder.util.lastState
 import app.phovdewae.sysadminreminder.util.settings
+import app.phovdewae.sysadminreminder.util.taskTimerPerformer
 import app.phovdewae.sysadminreminder.view_activities.BottomNavigationViewActivity
 import app.phovdewae.sysadminreminder.view_activities.CardViewActivity
 import app.phovdewae.sysadminreminder.view_activities.RecyclerViewActivity
@@ -22,20 +23,21 @@ import phovdewae.sysadminreminder.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
+    private val notificationConfigurator = NotificationConfigurator()
     private val taskCloud = TaskCloud()
-    private val taskAdapter = TaskAdapter(this, taskCloud)
+    private val taskAdapter = TaskAdapter(this, taskCloud, notificationConfigurator)
     lateinit var cardViewActivity: CardViewActivity
     lateinit var bottomNavigationViewActivity: BottomNavigationViewActivity
     lateinit var recyclerViewActivity: RecyclerViewActivity
-    private val notificationConfigurator = NotificationConfigurator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        taskTimerPerformer.context = this
+
         notificationConfigurator.createNotificationChannel(this)
-        notificationConfigurator.createNotification(this)
 
         val settingsConfigurator = SettingsConfigurator()
         settings = settingsConfigurator.loadSettings(this)

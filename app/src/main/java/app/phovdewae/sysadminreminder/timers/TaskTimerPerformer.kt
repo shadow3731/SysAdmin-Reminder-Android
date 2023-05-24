@@ -1,15 +1,19 @@
 package app.phovdewae.sysadminreminder.timers
 
+import android.content.Context
 import android.graphics.Color
 import androidx.cardview.widget.CardView
+import app.phovdewae.sysadminreminder.notifications.ExecutionCodes
+import app.phovdewae.sysadminreminder.notifications.NotificationConfigurator
+import app.phovdewae.sysadminreminder.tasks.Task
 import app.phovdewae.sysadminreminder.util.makeBackground
-import java.io.Serializable
 import java.util.Date
 import java.util.Timer
 import java.util.TimerTask
 
-class TaskTimerPerformer: Serializable {
+class TaskTimerPerformer {
 
+    lateinit var context: Context
     private val defaultTaskTimerList = arrayListOf(
         TaskTimer("Yellow", 3600000, Color.YELLOW, true),
         TaskTimer("Orange", 1200000, Color.rgb(225, 165, 0), true),
@@ -40,8 +44,13 @@ class TaskTimerPerformer: Serializable {
         return colorId
     }
 
-    fun addTimers(position: Int?, timestamp: Date, cardView: CardView) {
-        val current = timestamp.time - Date().time
+    fun addTimers(
+        position: Int?,
+        task: Task,
+        cardView: CardView,
+        notificationConfigurator: NotificationConfigurator
+    ) {
+        val current = task.executionTime!!.time - Date().time
 
         if (position == null) {
             timers.add(ArrayList(taskTimerLists.size))
@@ -54,14 +63,18 @@ class TaskTimerPerformer: Serializable {
                 if (position == null) {
                     timers[timers.size - 1].add(createTimerTask(
                         difference,
+                        task.description!!,
                         taskTimerLists[i].backgroundColor,
-                        cardView
+                        cardView,
+                        notificationConfigurator
                     ))
                 } else {
                     timers[position].add(createTimerTask(
                         difference,
+                        task.description!!,
                         taskTimerLists[i].backgroundColor,
-                        cardView
+                        cardView,
+                        notificationConfigurator
                     ))
                 }
             } else {
@@ -71,9 +84,9 @@ class TaskTimerPerformer: Serializable {
         }
     }
 
-    fun editTimers(position: Int, timestamp: Date) {
+    fun editTimers(position: Int, task: Task, notificationConfigurator: NotificationConfigurator) {
         deleteTimers(position, true)
-        addTimers(position, timestamp, cardViews[position])
+        addTimers(position, task, cardViews[position], notificationConfigurator)
     }
 
     fun deleteTimers(position: Int, forReschedule: Boolean) {
@@ -96,11 +109,46 @@ class TaskTimerPerformer: Serializable {
         cardViews.clear()
     }
 
-    private fun createTimerTask(mills: Long, color: Int, cardView: CardView): Timer {
+    private fun createTimerTask(
+        mills: Long,
+        description: String,
+        color: Int,
+        cardView: CardView,
+        notificationConfigurator: NotificationConfigurator
+    ): Timer {
         val timer = Timer()
         val task = object : TimerTask() {
             override fun run() {
                 makeBackground(color, cardView)
+
+                val duration = taskTimerLists.find { it.backgroundColor == color }?.duration
+                if (duration != null) {
+                    if (duration / 60000 > 0) {
+                        notificationConfigurator
+                            .createNotification(
+                                context,
+                                ExecutionCodes.BEFORE_EXECUTION,
+                                description,
+                                (duration / 60000).toInt()
+                            )
+                    } else if (duration / 60000 < 0) {
+                        notificationConfigurator
+                            .createNotification(
+                                context,
+                                ExecutionCodes.AFTER_EXECUTION,
+                                description,
+                                (duration / 60000).toInt()
+                            )
+                    } else {
+                        notificationConfigurator
+                            .createNotification(
+                                context,
+                                ExecutionCodes.TIME_EXECUTION,
+                                description,
+                                0
+                            )
+                    }
+                }
             }
         }
 

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import app.phovdewae.sysadminreminder.MainActivity
+import app.phovdewae.sysadminreminder.notifications.NotificationConfigurator
 import app.phovdewae.sysadminreminder.util.counter
 import app.phovdewae.sysadminreminder.util.dateTimeToString
 import app.phovdewae.sysadminreminder.util.lastState
@@ -19,7 +20,8 @@ import phovdewae.sysadminreminder.databinding.TaskItemBinding
 
 class TaskAdapter(
     private val mainActivity: MainActivity,
-    private val taskCloud: TaskCloud
+    private val taskCloud: TaskCloud,
+    private val notificationConfigurator: NotificationConfigurator
     ): RecyclerView.Adapter<TaskAdapter.TaskHolder>() {
 
     private var taskList = ArrayList<Task>()
@@ -43,13 +45,16 @@ class TaskAdapter(
 
             tvPriority.text = task.priority
 
-            if (task.executionTime != null) {
-                if (isExecutable) {
-                    makeBackground(taskTimerPerformer.getColor(task.executionTime!!), cvTaskField)
-                    taskTimerPerformer.addTimers(null, task.executionTime!!, cvTaskField)
-                } else {
-                    makeBackground(Color.WHITE, cvTaskField)
-                }
+            if (isExecutable) {
+                makeBackground(taskTimerPerformer.getColor(task.executionTime!!), cvTaskField)
+                taskTimerPerformer.addTimers(
+                    null,
+                    task,
+                    cvTaskField,
+                    notificationConfigurator
+                )
+            } else {
+                makeBackground(Color.WHITE, cvTaskField)
             }
         }
     }
@@ -128,7 +133,7 @@ class TaskAdapter(
     fun editTask(task: Task) {
         val position = activeTaskList.indexOf(activeTaskList.find { it.id == task.id })
         if (task.executionTime != null)
-            taskTimerPerformer.editTimers(position, task.executionTime!!)
+            taskTimerPerformer.editTimers(position, task, notificationConfigurator)
         if (taskCloud.saveTasksToFile(taskList, mainActivity)) {
             notifyItemChanged(position)
         }

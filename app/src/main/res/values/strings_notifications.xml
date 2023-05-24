@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_before_coming">The coming task</string>
+    <string name="notification_time_coming">The task has occurred</string>
+    <string name="notification_after_coming">The occurred task</string>
+
+    <string name="notification_singular_definition">minute</string>
+    <string name="notification_plural_definition">minutes</string>
+</resources>

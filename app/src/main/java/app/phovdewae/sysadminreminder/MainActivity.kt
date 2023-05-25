@@ -35,8 +35,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        taskTimerPerformer.context = this
-
         notificationConfigurator.createNotificationChannel(this)
 
         val settingsConfigurator = SettingsConfigurator()

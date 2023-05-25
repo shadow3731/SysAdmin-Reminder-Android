@@ -13,7 +13,6 @@ import java.util.TimerTask
 
 class TaskTimerPerformer {
 
-    lateinit var context: Context
     private val defaultTaskTimerList = arrayListOf(
         TaskTimer("Yellow", 3600000, Color.YELLOW, true),
         TaskTimer("Orange", 1200000, Color.rgb(225, 165, 0), true),
@@ -48,6 +47,7 @@ class TaskTimerPerformer {
         position: Int?,
         task: Task,
         cardView: CardView,
+        context: Context,
         notificationConfigurator: NotificationConfigurator
     ) {
         val current = task.executionTime!!.time - Date().time
@@ -66,6 +66,7 @@ class TaskTimerPerformer {
                         task.description!!,
                         taskTimerLists[i].backgroundColor,
                         cardView,
+                        context,
                         notificationConfigurator
                     ))
                 } else {
@@ -74,6 +75,7 @@ class TaskTimerPerformer {
                         task.description!!,
                         taskTimerLists[i].backgroundColor,
                         cardView,
+                        context,
                         notificationConfigurator
                     ))
                 }
@@ -84,9 +86,14 @@ class TaskTimerPerformer {
         }
     }
 
-    fun editTimers(position: Int, task: Task, notificationConfigurator: NotificationConfigurator) {
+    fun editTimers(
+        position: Int,
+        task: Task,
+        context: Context,
+        notificationConfigurator: NotificationConfigurator
+    ) {
         deleteTimers(position, true)
-        addTimers(position, task, cardViews[position], notificationConfigurator)
+        addTimers(position, task, cardViews[position], context, notificationConfigurator)
     }
 
     fun deleteTimers(position: Int, forReschedule: Boolean) {
@@ -114,6 +121,7 @@ class TaskTimerPerformer {
         description: String,
         color: Int,
         cardView: CardView,
+        context: Context,
         notificationConfigurator: NotificationConfigurator
     ): Timer {
         val timer = Timer()

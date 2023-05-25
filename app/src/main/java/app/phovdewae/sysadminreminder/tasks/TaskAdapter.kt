@@ -51,6 +51,7 @@ class TaskAdapter(
                     null,
                     task,
                     cvTaskField,
+                    mainActivity,
                     notificationConfigurator
                 )
             } else {
@@ -97,7 +98,8 @@ class TaskAdapter(
                                         taskCloud
                                     )
 
-                                R.id.delete_task_popup -> deleteTask(position)
+                                R.id.finish_task_popup -> deleteTask(position, true)
+                                R.id.cancel_task_popup -> deleteTask(position, false)
                             }
                             true
                         }
@@ -124,8 +126,8 @@ class TaskAdapter(
         for (task in taskList) {
             if (task.status == mainActivity.getString(R.string.active_task)) {
                 activeTaskList.add(task)
-                counter++
             }
+            counter++
         }
         notifyItemRangeInserted(0, activeTaskList.size)
     }
@@ -133,15 +135,17 @@ class TaskAdapter(
     fun editTask(task: Task) {
         val position = activeTaskList.indexOf(activeTaskList.find { it.id == task.id })
         if (task.executionTime != null)
-            taskTimerPerformer.editTimers(position, task, notificationConfigurator)
+            taskTimerPerformer.editTimers(position, task, mainActivity, notificationConfigurator)
         if (taskCloud.saveTasksToFile(taskList, mainActivity)) {
             notifyItemChanged(position)
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun deleteTask(position: Int) {
-        activeTaskList[position].status = mainActivity.getString(R.string.finished_task)
+    private fun deleteTask(position: Int, isFinished: Boolean) {
+        if (isFinished) activeTaskList[position].status = mainActivity.getString(R.string.finished_task)
+        else activeTaskList[position].status = mainActivity.getString(R.string.cancelled_task)
+
         if (taskCloud.saveTasksToFile(taskList, mainActivity)) {
             activeTaskList.removeAt(position)
             notifyItemRemoved(position)

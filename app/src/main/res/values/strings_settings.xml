@@ -23,6 +23,7 @@
     <string name="save_settings_button">Save</string>
     <string name="cancel_settings_button">Cancel</string>
     <string name="reset_settings_button">Reset</string>
+    <string name="about_app_button">About application</string>
     <string name="help_hint">Help</string>
 
     <string name="db_address_hint_input">Input address</string>

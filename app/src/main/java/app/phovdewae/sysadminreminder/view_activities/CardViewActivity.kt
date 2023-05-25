@@ -203,8 +203,8 @@ class CardViewActivity(private val cardView: CardView) {
         cardView.visibility = View.VISIBLE
 
         binding.apply {
-            clInnerMain.disable()
-            rvMain.disable(taskAdapter)
+            clInnerMain.disable(false)
+            rvMain.disable(false, taskAdapter)
             bnvMain.disable()
 
             etTaskExecDate.prepareForDateTime(mainActivity, true)
@@ -243,17 +243,21 @@ class CardViewActivity(private val cardView: CardView) {
             etTaskExecDate.text.clear()
             etTaskExecTime.text.clear()
 
-            clInnerMain.enable()
-            rvMain.enable(taskAdapter)
-            bnvMain.enable(
-                bottomNavigationViewActivity,
-                binding,
-                mainActivity,
-                this@CardViewActivity,
-                recyclerViewActivity,
-                taskAdapter,
-                taskCloud
-            )
+            clInnerMain.enable(false, mainActivity)
+            rvMain.enable(false, mainActivity, taskAdapter)
+            bnvMain.enable()
+            bnvMain.setOnItemSelectedListener {
+                bottomNavigationViewActivity
+                    .changeMainActivityNameOrAddTask(
+                        binding,
+                        mainActivity,
+                        this@CardViewActivity,
+                        recyclerViewActivity,
+                        taskAdapter,
+                        taskCloud,
+                        it.itemId)
+                true
+            }
         }
     }
 }

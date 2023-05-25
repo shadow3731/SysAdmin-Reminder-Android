@@ -5,7 +5,9 @@ import android.content.Context
 import android.graphics.Color
 import android.text.Editable
 import android.util.Base64
+import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import app.phovdewae.sysadminreminder.SettingsActivity
 import app.phovdewae.sysadminreminder.timers.TaskTimer
@@ -88,19 +90,19 @@ class SettingsConfigurator {
                 .newEditable(displayableSettings.timerGrayValue!!.toString())
 
             if (!swDbConnSettings.isChecked) {
-                etDbAddress.disable()
-                etDbPort.disable()
-                etDbName.disable()
-                etDbUsername.disable()
-                etDbPassword.disable()
-                etDbSyncTime.disable()
-                bExportTasks.disable()
-                bImportTasks.disable()
+                etDbAddress.disable(true)
+                etDbPort.disable(true)
+                etDbName.disable(true)
+                etDbUsername.disable(true)
+                etDbPassword.disable(true)
+                etDbSyncTime.disable(true)
+                bExportTasks.disable(true)
+                bImportTasks.disable(true)
             }
-            if (!swTimersYellow.isChecked) etTimersYellow.disable()
-            if (!swTimersOrange.isChecked) etTimersOrange.disable()
-            if (!swTimersRed.isChecked) etTimersRed.disable()
-            if (!swTimersGray.isChecked) etTimersGray.disable()
+            if (!swTimersYellow.isChecked) etTimersYellow.disable(true)
+            if (!swTimersOrange.isChecked) etTimersOrange.disable(true)
+            if (!swTimersRed.isChecked) etTimersRed.disable(true)
+            if (!swTimersGray.isChecked) etTimersGray.disable(true)
         }
     }
 
@@ -111,64 +113,60 @@ class SettingsConfigurator {
         binding.apply {
             swDbConnSettings.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    etDbAddress.enable(settingsActivity)
-                    etDbPort.enable(settingsActivity)
-                    etDbName.enable(settingsActivity)
-                    etDbUsername.enable(settingsActivity)
-                    etDbPassword.enable(settingsActivity)
-                    etDbSyncTime.enable(settingsActivity)
-                    bExportTasks.enable(settingsActivity)
-                    bImportTasks.enable(settingsActivity)
+                    etDbAddress.enable(true, settingsActivity)
+                    etDbPort.enable(true, settingsActivity)
+                    etDbName.enable(true, settingsActivity)
+                    etDbUsername.enable(true, settingsActivity)
+                    etDbPassword.enable(true, settingsActivity)
+                    etDbSyncTime.enable(true, settingsActivity)
+                    bExportTasks.enable(true, settingsActivity)
+                    bImportTasks.enable(true, settingsActivity)
                 } else {
-                    etDbAddress.disable()
-                    etDbPort.disable()
-                    etDbName.disable()
-                    etDbUsername.disable()
-                    etDbPassword.disable()
-                    etDbSyncTime.disable()
-                    bExportTasks.disable()
-                    bImportTasks.disable()
+                    etDbAddress.disable(true)
+                    etDbPort.disable(true)
+                    etDbName.disable(true)
+                    etDbUsername.disable(true)
+                    etDbPassword.disable(true)
+                    etDbSyncTime.disable(true)
+                    bExportTasks.disable(true)
+                    bImportTasks.disable(true)
                 }
             }
 
             swTimersYellow.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) etTimersYellow.enable(settingsActivity) else etTimersYellow.disable()
+                if (isChecked) etTimersYellow.enable(true, settingsActivity)
+                else etTimersYellow.disable(true)
             }
 
             swTimersOrange.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) etTimersOrange.enable(settingsActivity) else etTimersOrange.disable()
+                if (isChecked) etTimersOrange.enable(true, settingsActivity)
+                else etTimersOrange.disable(true)
             }
 
             swTimersRed.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) etTimersRed.enable(settingsActivity) else etTimersRed.disable()
+                if (isChecked) etTimersRed.enable(true, settingsActivity)
+                else etTimersRed.disable(true)
             }
 
             swTimersGray.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) etTimersGray.enable(settingsActivity) else etTimersGray.disable()
+                if (isChecked) etTimersGray.enable(true, settingsActivity)
+                else etTimersGray.disable(true)
             }
 
             ibHelpDbSync.setOnClickListener {
-                cvHelp.visibility = View.VISIBLE
-                tvHelpDesc.text = settingsActivity.getString(R.string.db_sync_help)
-                svSettings.disable()
-
-                bHelpClose.setOnClickListener {
-                    cvHelp.visibility = View.GONE
-                    tvHelpDesc.text = ""
-                    svSettings.enable()
-                }
+                listenToHelp(
+                    binding,
+                    settingsActivity.getString(R.string.db_sync_help),
+                    settingsActivity
+                )
             }
 
             ibHelpTimers.setOnClickListener {
-                cvHelp.visibility = View.VISIBLE
-                tvHelpDesc.text = settingsActivity.getString(R.string.db_timers_help)
-                svSettings.disable()
-
-                bHelpClose.setOnClickListener {
-                    cvHelp.visibility = View.GONE
-                    tvHelpDesc.text = ""
-                    svSettings.enable()
-                }
+                listenToHelp(
+                    binding,
+                    settingsActivity.getString(R.string.db_timers_help),
+                    settingsActivity
+                )
             }
 
             bSaveSettings.setOnClickListener {
@@ -217,6 +215,42 @@ class SettingsConfigurator {
 
             bResetSettings.setOnClickListener {
                 displaySettings(binding, loadSettings(settingsActivity, true))
+            }
+        }
+    }
+
+    private fun listenToHelp(binding: ActivitySettingsBinding, text: String, context: Context) {
+        binding.apply {
+            cvHelp.visibility = View.VISIBLE
+            tvHelpDesc.text = text
+            disableElementsInSettings(svSettings)
+
+            bHelpClose.setOnClickListener {
+                cvHelp.visibility = View.GONE
+                tvHelpDesc.text = ""
+                enableElementsInSettings(svSettings, context)
+                displaySettings(binding, settings)
+                listenToSettings(binding, context as SettingsActivity)
+            }
+        }
+    }
+
+    private fun enableElementsInSettings(element: View, context: Context) {
+        element.enable(false, context)
+
+        if (element is ViewGroup) {
+            for (i in 0 until element.childCount) {
+                enableElementsInSettings(element.getChildAt(i), context)
+            }
+        }
+    }
+
+    private fun disableElementsInSettings(element: View) {
+        element.disable(false)
+
+        if (element is ViewGroup) {
+            for (i in 0 until element.childCount) {
+                disableElementsInSettings(element.getChildAt(i))
             }
         }
     }

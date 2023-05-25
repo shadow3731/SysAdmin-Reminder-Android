@@ -5,6 +5,9 @@
         android:id="@+id/edit_task_popup"
         android:title="@string/edit_task_menu" />
     <item
-        android:id="@+id/delete_task_popup"
-        android:title="@string/delete_task_menu" />
+        android:id="@+id/finish_task_popup"
+        android:title="@string/finish_task_menu" />
+    <item
+        android:id="@+id/cancel_task_popup"
+        android:title="@string/cancel_task_menu" />
 </menu>

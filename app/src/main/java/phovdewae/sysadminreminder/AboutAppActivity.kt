@@ -25,12 +25,13 @@ class AboutAppActivity : AppCompatActivity() {
             tvWinApp.text = textForWinApp
 
             ibDevGmailAboutApp.setOnClickListener {
-                DeveloperConnection().sendToMail(this@AboutAppActivity)
+                DeveloperConnection().sendToMail(this@AboutAppActivity, binding)
             }
 
             ibDevVkAboutApp.setOnClickListener {
                 DeveloperConnection().sendToPage(
                     this@AboutAppActivity,
+                    binding,
                     getString(R.string.about_app_dev_vkontakte)
                 )
             }
@@ -38,6 +39,7 @@ class AboutAppActivity : AppCompatActivity() {
             ibDevLinAboutApp.setOnClickListener {
                 DeveloperConnection().sendToPage(
                     this@AboutAppActivity,
+                    binding,
                     getString(R.string.about_app_dev_linkedin)
                 )
             }

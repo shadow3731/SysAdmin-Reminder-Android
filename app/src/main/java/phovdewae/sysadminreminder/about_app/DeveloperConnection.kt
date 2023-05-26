@@ -3,12 +3,12 @@ package phovdewae.sysadminreminder.about_app
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.widget.Toast
 import phovdewae.sysadminreminder.R
+import phovdewae.sysadminreminder.databinding.ActivityAboutAppBinding
 
 class DeveloperConnection {
 
-    fun sendToMail(context: Context) {
+    fun sendToMail(context: Context, binding: ActivityAboutAppBinding) {
         val email = "v1rus3731@gmail.com"
 
         val intent = Intent(Intent.ACTION_SENDTO)
@@ -16,18 +16,11 @@ class DeveloperConnection {
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
         intent.putExtra(Intent.EXTRA_SUBJECT, "SysAdmin Reminder for Android feedback")
 
-        if (intent.resolveActivity(context.packageManager) != null) {
-            context.startActivity(intent)
-        } else {
-            Toast.makeText(
-                context,
-                "${context.getString(R.string.developer_email_title)} $email",
-                Toast.LENGTH_LONG
-            ).show()
-        }
+        if (intent.resolveActivity(context.packageManager) != null) context.startActivity(intent)
+        else binding.tvDevLink.text = email
     }
 
-    fun sendToPage(context: Context, socialNetwork: String) {
+    fun sendToPage(context: Context, binding: ActivityAboutAppBinding, socialNetwork: String) {
         val vkUrl = "https://vk.com/v1rus"
         val linkedInUrl = "https://linkedin.com/in/vladislav-klimenok-195385253/"
 
@@ -43,17 +36,8 @@ class DeveloperConnection {
             context.startActivity(intent)
         } else {
             when (socialNetwork) {
-                context.getString(R.string.about_app_dev_vkontakte) -> Toast.makeText(
-                    context,
-                    "${context.getString(R.string.developer_vkontakte_title)} $vkUrl",
-                    Toast.LENGTH_LONG
-                ).show()
-
-                context.getString(R.string.about_app_dev_linkedin) -> Toast.makeText(
-                    context,
-                    "${context.getString(R.string.developer_linkedin_title)} $linkedInUrl",
-                    Toast.LENGTH_LONG
-                ).show()
+                context.getString(R.string.about_app_dev_vkontakte) -> binding.tvDevLink.text = vkUrl
+                context.getString(R.string.about_app_dev_linkedin) -> binding.tvDevLink.text = linkedInUrl
             }
         }
     }

@@ -3,6 +3,7 @@ package phovdewae.sysadminreminder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import phovdewae.sysadminreminder.about_app.DeveloperConnection
 import phovdewae.sysadminreminder.databinding.ActivityAboutAppBinding
 
 class AboutAppActivity : AppCompatActivity() {
@@ -22,6 +23,24 @@ class AboutAppActivity : AppCompatActivity() {
             val textForWinApp = "${getString(R.string.about_app_windows)} " +
                     getString(R.string.about_app_developing)
             tvWinApp.text = textForWinApp
+
+            ibDevGmailAboutApp.setOnClickListener {
+                DeveloperConnection().sendToMail(this@AboutAppActivity)
+            }
+
+            ibDevVkAboutApp.setOnClickListener {
+                DeveloperConnection().sendToPage(
+                    this@AboutAppActivity,
+                    getString(R.string.about_app_dev_vkontakte)
+                )
+            }
+
+            ibDevLinAboutApp.setOnClickListener {
+                DeveloperConnection().sendToPage(
+                    this@AboutAppActivity,
+                    getString(R.string.about_app_dev_linkedin)
+                )
+            }
         }
     }
 

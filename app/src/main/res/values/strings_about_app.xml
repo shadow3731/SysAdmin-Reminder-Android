@@ -10,4 +10,9 @@
     <string name="about_app_other_platforms_title">This application on other platforms:</string>
     <string name="about_app_windows">Windows:</string>
     <string name="about_app_developing">developing</string>
+
+    <string name="developer_email_title">Developer\'s e-mail: </string>
+    <string name="developer_telegram_title">Developer\'s Telegram page: </string>
+    <string name="developer_vkontakte_title">Developer\'s VK page: </string>
+    <string name="developer_linkedin_title">Developer\'s LinkedIn page: </string>
 </resources>

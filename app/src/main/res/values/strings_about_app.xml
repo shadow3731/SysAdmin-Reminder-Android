@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_app_version">Version: 1.0.0</string>
+    <string name="about_app_icon_desc">Icon</string>
+    <string name="about_app_dev_contacts_title">Developer contacts:</string>
+    <string name="about_app_dev_gmail">Gmail</string>
+    <string name="about_app_dev_telegram">Telegram</string>
+    <string name="about_app_dev_vkontakte">VK</string>
+    <string name="about_app_dev_linkedin">LinkedIn</string>
+    <string name="about_app_other_platforms_title">This application on other platforms:</string>
+    <string name="about_app_windows">Windows:</string>
+    <string name="about_app_developing">developing</string>
+</resources>

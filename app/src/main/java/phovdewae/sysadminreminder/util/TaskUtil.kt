@@ -11,6 +11,8 @@ import java.util.Locale
 var counter = 0
 var datePattern = "dd.MM.yyyy"
 var timePattern = "HH:mm"
+var priorityList = ArrayList<String>()
+var statusList = ArrayList<String>()
 var taskTimerPerformer = TaskTimerPerformer()
 
 fun dateTimeToString(srcDateTime: Date): String {
@@ -40,12 +42,18 @@ fun stringToDateTime(srcDateTime: String): Date {
     return dateTimeFormat.parse(srcDateTime)!!
 }
 
-fun getPriorities(context: Context): Array<String> {
-    return context.resources.getStringArray(R.array.priorities)
+fun getPrioritiesAndStatuses(context: Context) {
+    priorityList = ArrayList(context.resources.getStringArray(R.array.priorities).asList())
+    statusList = ArrayList(context.resources.getStringArray(R.array.statuses).asList())
 }
 
-fun definePriorityId(context: Context, priority: String): Int {
-    val index = getPriorities(context).indexOf(priority)
+fun definePriorityId(priority: String): Int {
+    val index = priorityList.indexOf(priority)
+    return if (index > -1) index else 0
+}
+
+fun defineStatusId(status: String): Int {
+    val index = statusList.indexOf(status)
     return if (index > -1) index else 0
 }
 

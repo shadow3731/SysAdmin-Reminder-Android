@@ -19,7 +19,7 @@ import phovdewae.sysadminreminder.view_activities.BottomNavigationViewActivity
 import phovdewae.sysadminreminder.view_activities.CardViewActivity
 import phovdewae.sysadminreminder.view_activities.RecyclerViewActivity
 import phovdewae.sysadminreminder.databinding.ActivityMainBinding
-import phovdewae.sysadminreminder.util.LoadingBlocker
+import phovdewae.sysadminreminder.util.getPrioritiesAndStatuses
 import phovdewae.sysadminreminder.util.loading
 
 class MainActivity : AppCompatActivity() {
@@ -40,20 +40,30 @@ class MainActivity : AppCompatActivity() {
 
         loading.showLoading(binding, taskAdapter)
 
+        getPrioritiesAndStatuses(this)
+
         val settingsConfigurator = SettingsConfigurator()
         settings = settingsConfigurator.loadSettings(this)
         settingsConfigurator.applySettings()
 
-        val dbConnector = DatabaseConnector
-        dbConnector.getConnection(
+        DatabaseConnector.createConnection(
             settings.databaseAddress!!,
             settings.databasePort!!,
             settings.databaseName!!,
             settings.databaseUsername!!,
             settings.databasePassword!!
         )
-        if (dbConnector.connectionExists()) Toast.makeText(this, "Connection established", Toast.LENGTH_SHORT).show()
-        else Toast.makeText(this, "Connection failed", Toast.LENGTH_SHORT).show()
+
+//        val dbConnector = DatabaseConnector
+//        dbConnector.getConnection(
+//            settings.databaseAddress!!,
+//            settings.databasePort!!,
+//            settings.databaseName!!,
+//            settings.databaseUsername!!,
+//            settings.databasePassword!!
+//        )
+//        if (dbConnector.connectionExists()) Toast.makeText(this, "Connection established", Toast.LENGTH_SHORT).show()
+//        else Toast.makeText(this, "Connection failed", Toast.LENGTH_SHORT).show()
 
         binding.apply {
             cardViewActivity = CardViewActivity(cvTaskMain)

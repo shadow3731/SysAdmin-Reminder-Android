@@ -17,6 +17,9 @@ import phovdewae.sysadminreminder.util.makeBackground
 import phovdewae.sysadminreminder.util.taskTimerPerformer
 import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.TaskItemBinding
+import phovdewae.sysadminreminder.util.defineStatusId
+import phovdewae.sysadminreminder.util.priorityList
+import phovdewae.sysadminreminder.util.statusList
 
 class TaskAdapter(
     private val mainActivity: MainActivity,
@@ -36,14 +39,14 @@ class TaskAdapter(
 
             if (isExecutable) tvDescription.text = task.description
             else {
-                val text = "(${task.status}) ${task.description}"
+                val text = "(${statusList[task.statusId!!]}) ${task.description}"
                 tvDescription.text = text
             }
 
             if (task.executionTime != null)
                 tvExecutionTime.text = dateTimeToString(task.executionTime!!)
 
-            tvPriority.text = task.priority
+            tvPriority.text = priorityList[task.priorityId!!]
 
             if (isExecutable) {
                 makeBackground(taskTimerPerformer.getColor(task.executionTime!!), cvTaskField)
@@ -79,7 +82,7 @@ class TaskAdapter(
     override fun onBindViewHolder(holder: TaskHolder, position: Int) {
         when (lastState) {
             R.id.tasks -> {
-                if (activeTaskList[position].status == mainActivity.getString(R.string.active_task)) {
+                if (activeTaskList[position].statusId == defineStatusId(mainActivity.getString(R.string.status_active))) {
                     holder.bind(activeTaskList[position], true)
 
                     holder.itemView.setOnLongClickListener {
@@ -124,7 +127,7 @@ class TaskAdapter(
     fun addTasks(tasks: ArrayList<Task>) {
         taskList = tasks
         for (task in taskList) {
-            if (task.status == mainActivity.getString(R.string.active_task)) {
+            if (task.statusId == defineStatusId(mainActivity.getString(R.string.status_active))) {
                 activeTaskList.add(task)
             }
             counter++
@@ -143,8 +146,12 @@ class TaskAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     private fun deleteTask(position: Int, isFinished: Boolean) {
-        if (isFinished) activeTaskList[position].status = mainActivity.getString(R.string.finished_task)
-        else activeTaskList[position].status = mainActivity.getString(R.string.cancelled_task)
+        if (isFinished) activeTaskList[position].statusId = defineStatusId(
+            mainActivity.getString(R.string.status_finished)
+        )
+        else activeTaskList[position].statusId = defineStatusId(
+            mainActivity.getString(R.string.status_cancelled)
+        )
 
         if (taskCloud.saveTasksToFile(taskList, mainActivity)) {
             activeTaskList.removeAt(position)

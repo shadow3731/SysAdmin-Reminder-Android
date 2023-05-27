@@ -71,8 +71,8 @@ class TaskCloud {
                     0 -> task.id = matchInner.value.toLong()
                     1 -> task.description = matchInner.value
                     2 -> task.executionTime = stringToDateTime(matchInner.value)
-                    3 -> task.priority = matchInner.value
-                    4 -> task.status = matchInner.value
+                    3 -> task.priorityId = matchInner.value.toInt()
+                    4 -> task.statusId = matchInner.value.toInt()
                 }
                 i++
             }

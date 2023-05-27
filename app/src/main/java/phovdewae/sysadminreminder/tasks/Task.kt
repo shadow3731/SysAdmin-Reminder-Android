@@ -7,8 +7,8 @@ class Task(
     var id: Long?,
     var description: String?,
     var executionTime: Date?,
-    var priority: String?,
-    var status: String?
+    var priorityId: Int?,
+    var statusId: Int?
     ) {
 
     constructor() : this(null, null, null, null, null)
@@ -16,7 +16,7 @@ class Task(
     fun toStringForFile(): String {
         return "||$id||$description||${
             dateTimeToString(executionTime!!)
-        }||$priority||$status||"
+        }||$priorityId||$statusId||"
     }
 
     override fun toString(): String {
@@ -24,7 +24,7 @@ class Task(
                 "id=$id, " +
                 "description=$description, " +
                 "executionTime=$executionTime, " +
-                "priority=$priority, " +
-                "status=$status)"
+                "priority=$priorityId, " +
+                "status=$statusId)"
     }
 }

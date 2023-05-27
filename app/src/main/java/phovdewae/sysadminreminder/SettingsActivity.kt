@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import phovdewae.sysadminreminder.settings.SettingsConfigurator
 import phovdewae.sysadminreminder.util.settings
-import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity() {

@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import phovdewae.sysadminreminder.tasks.TaskAdapter
 import phovdewae.sysadminreminder.tasks.TaskCloud
-import phovdewae.sysadminreminder.util.counter
 
 class RecyclerViewActivity(private val recyclerView: RecyclerView) {
 

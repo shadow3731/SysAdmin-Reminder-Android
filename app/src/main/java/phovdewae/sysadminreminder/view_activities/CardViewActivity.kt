@@ -21,7 +21,6 @@ import phovdewae.sysadminreminder.util.dateToString
 import phovdewae.sysadminreminder.util.definePriorityId
 import phovdewae.sysadminreminder.util.disable
 import phovdewae.sysadminreminder.util.enable
-import phovdewae.sysadminreminder.util.getPriorities
 import phovdewae.sysadminreminder.util.hideKeyboard
 import phovdewae.sysadminreminder.util.isValid
 import phovdewae.sysadminreminder.util.move
@@ -30,13 +29,17 @@ import phovdewae.sysadminreminder.util.stringToDateTime
 import phovdewae.sysadminreminder.util.timeToString
 import phovdewae.sysadminreminder.R
 import phovdewae.sysadminreminder.databinding.ActivityMainBinding
+import phovdewae.sysadminreminder.util.defineStatusId
+import phovdewae.sysadminreminder.util.priorityList
 
 class CardViewActivity(private val cardView: CardView) {
 
-    inner class SpinnerAdapter(context: Context, items: Array<String>):
-        ArrayAdapter<String>(context,
+    inner class SpinnerAdapter(context: Context):
+        ArrayAdapter<String>(
+            context,
             androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-            items) {
+            priorityList
+        ) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val view = super.getView(position, convertView, parent)
@@ -55,14 +58,16 @@ class CardViewActivity(private val cardView: CardView) {
 
     inner class SpinnerOnItemSelectedListener: AdapterView.OnItemSelectedListener {
 
-        lateinit var selectedPriority: String
+        var selectedPriorityId = 0
 
         override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-            selectedPriority = parent.getItemAtPosition(position).toString()
+            val selectedPriority = parent.getItemAtPosition(position).toString()
+            selectedPriorityId = definePriorityId(selectedPriority)
         }
 
         override fun onNothingSelected(parent: AdapterView<*>) {
-            selectedPriority = parent.getItemAtPosition(0).toString()
+            val selectedPriority = parent.getItemAtPosition(0).toString()
+            selectedPriorityId - definePriorityId(selectedPriority)
         }
 
     }
@@ -93,15 +98,20 @@ class CardViewActivity(private val cardView: CardView) {
             bTaskAddEdit.text = mainActivity.getText(R.string.add_new_task)
 
             bTaskAddEdit.setOnClickListener {
-                if (isValid(etTaskDesc.text.toString(),
+                if (isValid(
+                        etTaskDesc.text.toString(),
                         etTaskExecDate.text.toString(),
-                        etTaskExecTime.text.toString())
+                        etTaskExecTime.text.toString()
+                    )
                 ) {
                     val task = Task((++counter).toLong(),
                         etTaskDesc.text.toString(),
-                        stringToDateTime(etTaskExecDate.text.toString(), etTaskExecTime.text.toString()),
-                        spinnerListener.selectedPriority,
-                        mainActivity.getString(R.string.active_task)
+                        stringToDateTime(
+                            etTaskExecDate.text.toString(),
+                            etTaskExecTime.text.toString()
+                        ),
+                        spinnerListener.selectedPriorityId,
+                        defineStatusId(mainActivity.getString(R.string.status_active))
                     )
                     rvMain.layoutManager = LinearLayoutManager(mainActivity)
                     rvMain.adapter = taskAdapter
@@ -155,8 +165,7 @@ class CardViewActivity(private val cardView: CardView) {
 
             val spinnerListener = SpinnerOnItemSelectedListener()
             sTaskPrior.onItemSelectedListener = spinnerListener
-            if (task.priority != null) sTaskPrior
-                .setSelection(definePriorityId(mainActivity, task.priority!!))
+            if (task.priorityId != null) sTaskPrior.setSelection(task.priorityId!!)
 
             bTaskAddEdit.text = mainActivity.getText(R.string.edit_task)
 
@@ -170,7 +179,7 @@ class CardViewActivity(private val cardView: CardView) {
                         etTaskExecDate.text.toString(),
                         etTaskExecTime.text.toString()
                     )
-                    task.priority = spinnerListener.selectedPriority
+                    task.priorityId = spinnerListener.selectedPriorityId
 
                     rvMain.layoutManager = LinearLayoutManager(mainActivity)
                     rvMain.adapter = taskAdapter
@@ -210,7 +219,7 @@ class CardViewActivity(private val cardView: CardView) {
             etTaskExecDate.prepareForDateTime(mainActivity, true)
             etTaskExecTime.prepareForDateTime(mainActivity, false)
 
-            val spinnerAdapter = SpinnerAdapter(mainActivity, getPriorities(mainActivity))
+            val spinnerAdapter = SpinnerAdapter(mainActivity)
             sTaskPrior.adapter = spinnerAdapter
 
             bTaskCancel.setOnClickListener {

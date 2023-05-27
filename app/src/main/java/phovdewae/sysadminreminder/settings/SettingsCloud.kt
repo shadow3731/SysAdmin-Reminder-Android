@@ -2,7 +2,6 @@ package phovdewae.sysadminreminder.settings
 
 import android.content.Context
 import phovdewae.sysadminreminder.util.isEmptyField
-import phovdewae.sysadminreminder.util.isNullablePassword
 import java.io.File
 import java.io.FileOutputStream
 
@@ -58,7 +57,7 @@ class SettingsCloud {
                 "||${savableSettings.databasePort?.isEmptyField(true)}" +
                 "||${savableSettings.databaseName?.isEmptyField(true)}" +
                 "||${savableSettings.databaseUsername?.isEmptyField(true)}" +
-                "||${isNullablePassword(savableSettings.databasePassword)}" +
+                "||${savableSettings.databasePassword?.isEmptyField(true)}" +
                 "||${savableSettings.databaseSyncTime}" +
                 "||${savableSettings.timerYellowEnabled}" +
                 "||${savableSettings.timerYellowValue}" +
@@ -83,11 +82,7 @@ class SettingsCloud {
                 2 -> settings.databasePort = match.value.isEmptyField(false)
                 3 -> settings.databaseName = match.value.isEmptyField(false)
                 4 -> settings.databaseUsername = match.value.isEmptyField(false)
-                5 -> {
-                    val rawPassword = match.value.isEmptyField(false)
-                    settings.databasePassword = if (rawPassword == "") null
-                    else rawPassword.toByteArray()
-                }
+                5 -> settings.databasePassword = match.value.isEmptyField(false)
                 6 -> settings.databaseSyncTime = match.value.toInt()
                 7 -> settings.timerYellowEnabled = match.value.toBoolean()
                 8 -> settings.timerYellowValue = match.value.toInt()

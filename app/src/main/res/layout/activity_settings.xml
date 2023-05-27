@@ -304,6 +304,19 @@
                     tools:ignore="TouchTargetSizeCheck,VisualLintTextFieldSize" />
             </LinearLayout>
 
+            <Button
+                android:id="@+id/b_db_conn_manual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/background"
+                android:text="@string/db_conn_instructions"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

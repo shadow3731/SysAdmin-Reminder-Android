@@ -10,6 +10,7 @@
     <string name="db_name_hint">Database name:</string>
     <string name="db_username_hint">Username:</string>
     <string name="db_password_hint">Password:</string>
+    <string name="db_conn_instructions">How to configure database connection</string>
     <string name="period_sync_header">Database synchronization</string>
     <string name="period_sync_time_hint">Synchronize with database every (in minutes):</string>
     <string name="timers_activation_moment_header">Time of timers activation before the event occurs (in minutes)</string>

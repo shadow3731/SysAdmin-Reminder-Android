@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.text.Editable
-import android.util.Base64
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -79,10 +78,8 @@ class SettingsConfigurator {
                 .newEditable(displayableSettings.databaseName!!)
             etDbUsername.text = Editable.Factory.getInstance()
                 .newEditable(displayableSettings.databaseUsername!!)
-            if (displayableSettings.databasePassword != null)
-                etDbPassword.text = Editable.Factory.getInstance()
-                    .newEditable(Base64.decode(displayableSettings.databasePassword!!, Base64.DEFAULT)
-                        .toString())
+            etDbPassword.text = Editable.Factory.getInstance()
+                    .newEditable(displayableSettings.databasePassword!!)
             etDbSyncTime.text = Editable.Factory.getInstance()
                 .newEditable(displayableSettings.databaseSyncTime!!.toString())
             swTimersYellow.isChecked = displayableSettings.timerYellowEnabled!!
@@ -196,8 +193,8 @@ class SettingsConfigurator {
                     else etDbName.text.toString()
                     settings.databaseUsername = if (etDbUsername.text.isNullOrEmpty()) ""
                     else etDbUsername.text.toString()
-                    settings.databasePassword = if (etDbPassword.text.isNullOrEmpty()) null
-                    else Base64.encode(etDbPassword.text.toString().toByteArray(), Base64.DEFAULT)
+                    settings.databasePassword = if (etDbPassword.text.isNullOrEmpty()) ""
+                    else etDbPassword.text.toString()
                     settings.databaseSyncTime = etDbSyncTime.text.toString().toInt()
                     settings.timerYellowEnabled = swTimersYellow.isChecked
                     settings.timerYellowValue = etTimersYellow.text.toString().toInt()

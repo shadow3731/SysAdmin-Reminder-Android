@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import phovdewae.sysadminreminder.database.DatabaseConnector
 import phovdewae.sysadminreminder.notifications.NotificationConfigurator
 import phovdewae.sysadminreminder.settings.SettingsConfigurator
 import phovdewae.sysadminreminder.tasks.TaskAdapter
@@ -18,6 +19,8 @@ import phovdewae.sysadminreminder.view_activities.BottomNavigationViewActivity
 import phovdewae.sysadminreminder.view_activities.CardViewActivity
 import phovdewae.sysadminreminder.view_activities.RecyclerViewActivity
 import phovdewae.sysadminreminder.databinding.ActivityMainBinding
+import phovdewae.sysadminreminder.util.LoadingBlocker
+import phovdewae.sysadminreminder.util.loading
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -35,9 +38,22 @@ class MainActivity : AppCompatActivity() {
 
         notificationConfigurator.createNotificationChannel(this)
 
+        loading.showLoading(binding, taskAdapter)
+
         val settingsConfigurator = SettingsConfigurator()
         settings = settingsConfigurator.loadSettings(this)
         settingsConfigurator.applySettings()
+
+        val dbConnector = DatabaseConnector
+        dbConnector.getConnection(
+            settings.databaseAddress!!,
+            settings.databasePort!!,
+            settings.databaseName!!,
+            settings.databaseUsername!!,
+            settings.databasePassword!!
+        )
+        if (dbConnector.connectionExists()) Toast.makeText(this, "Connection established", Toast.LENGTH_SHORT).show()
+        else Toast.makeText(this, "Connection failed", Toast.LENGTH_SHORT).show()
 
         binding.apply {
             cardViewActivity = CardViewActivity(cvTaskMain)
@@ -53,6 +69,8 @@ class MainActivity : AppCompatActivity() {
                 taskCloud
             )
         }
+
+        loading.hideLoading(binding, this, taskAdapter)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

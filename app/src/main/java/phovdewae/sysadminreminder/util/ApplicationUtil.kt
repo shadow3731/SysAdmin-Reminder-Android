@@ -21,6 +21,8 @@ import java.util.Locale
 
 var lastState = R.id.tasks
 var settings = Settings()
+var usingDatabase = false
+var loading = LoadingBlocker()
 
 fun View.enable(isChangeableBackground: Boolean, context: Context) {
     enableElement(this)

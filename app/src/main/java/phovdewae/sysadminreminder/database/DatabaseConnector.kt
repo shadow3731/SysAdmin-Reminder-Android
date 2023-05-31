@@ -1,11 +1,13 @@
 package phovdewae.sysadminreminder.database
 
+import android.os.StrictMode
 import android.util.Log
 import android.widget.Toast
 import java.lang.Exception
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
+import java.sql.Statement
 import java.util.Properties
 
 object DatabaseConnector {
@@ -19,28 +21,28 @@ object DatabaseConnector {
         username: String,
         password: String
     ) {
-        //Log.d("MyTag", "$address $port $name $username $password")
+        Log.d("MyTag", "$address $port $name $username $password")
 
         if (connection == null) {
-            val connectionProps = Properties()
-            connectionProps["username"] = username
-            connectionProps["password"] = password
 
-//            try {
-//                Class.forName("com.mysql.jdbc.Driver").newInstance()
-//                connection = DriverManager.getConnection(
-//                    "jdbc:mysql://127.0.0.1:3306/sysadmin_reminder",
-//                    connectionProps
-//                )
-//                Log.d("MyTag", "Success")
-//            } catch (e: SQLException) {
-//                Log.d("MyTag", "Failed at SQLException. ${e.cause}. ${e.message}")
-//            } catch (e: Exception) {
-//                Log.d("MyTag", "Failed at Exception. ${e.cause}. ${e.message}")
-//            }
+            try {
+//                val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+//                StrictMode.setThreadPolicy(policy)
+                Class.forName("com.mysql.cj.jdbc.Driver")
+                connection = DriverManager.getConnection(
+                    "jdbc:mysql://$address:$port/$name?enabledTLSProtocols=TLSv1.2",
+                    username,
+                    password
+                )
+                Log.d("MyTag", "Success")
+            } catch (e: SQLException) {
+                Log.d("MyTag", "Failed at SQLException. ${e.cause}. ${e.message}\n${e.printStackTrace()}")
+            } catch (e: Exception) {
+                Log.d("MyTag", "Failed at Exception. ${e.cause}. ${e.message}\n${e.printStackTrace()}")
+            }
 
-            val url = "jdbc:mysql://$address:$port/$name?serverTimezone=UTC"
-            connection = DriverManager.getConnection(url, connectionProps)
+//            val url = "jdbc:mysql://$address:$port/$name?serverTimezone=UTC"
+//            connection = DriverManager.getConnection(url, connectionProps)
         }
     }
 

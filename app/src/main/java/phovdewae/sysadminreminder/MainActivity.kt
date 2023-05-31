@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -46,13 +47,19 @@ class MainActivity : AppCompatActivity() {
         settings = settingsConfigurator.loadSettings(this)
         settingsConfigurator.applySettings()
 
-        DatabaseConnector.createConnection(
-            settings.databaseAddress!!,
-            settings.databasePort!!,
-            settings.databaseName!!,
-            settings.databaseUsername!!,
-            settings.databasePassword!!
-        )
+        Thread {
+            Log.d("MyTag", "Secondary thread")
+            DatabaseConnector.createConnection(
+                settings.databaseAddress!!,
+                settings.databasePort!!,
+                settings.databaseName!!,
+                settings.databaseUsername!!,
+                settings.databasePassword!!
+            )
+        }.start()
+        Log.d("MyTag", "Primary thread")
+
+
 
 //        val dbConnector = DatabaseConnector
 //        dbConnector.getConnection(

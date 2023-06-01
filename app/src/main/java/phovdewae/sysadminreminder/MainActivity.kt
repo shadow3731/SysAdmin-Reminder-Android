@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
         settingsConfigurator.applySettings()
 
         Thread {
-            Log.d("MyTag", "Secondary thread")
             DatabaseConnector.createConnection(
                 settings.databaseAddress!!,
                 settings.databasePort!!,
@@ -57,7 +56,6 @@ class MainActivity : AppCompatActivity() {
                 settings.databasePassword!!
             )
         }.start()
-        Log.d("MyTag", "Primary thread")
 
 
 

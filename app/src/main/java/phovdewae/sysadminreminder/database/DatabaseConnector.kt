@@ -1,14 +1,17 @@
 package phovdewae.sysadminreminder.database
 
-import android.os.StrictMode
 import android.util.Log
-import android.widget.Toast
+import com.mongodb.ConnectionString
+import com.mongodb.MongoClientSettings
+import com.mongodb.MongoException
+import com.mongodb.ServerApi
+import com.mongodb.ServerApiVersion
+import com.mongodb.client.MongoClients
+import org.bson.BsonDocument
+import org.bson.BsonInt64
 import java.lang.Exception
 import java.sql.Connection
-import java.sql.DriverManager
 import java.sql.SQLException
-import java.sql.Statement
-import java.util.Properties
 
 object DatabaseConnector {
 
@@ -21,25 +24,51 @@ object DatabaseConnector {
         username: String,
         password: String
     ) {
-        Log.d("MyTag", "$address $port $name $username $password")
+        //Log.d("MyTag", "$address $port $name $username $password")
 
         if (connection == null) {
+            val uri = "mongodb+srv://admin:050799@sysadminremindercluster.lxdhxvv.mongodb.net/?retryWrites=true&w=majority"
+            val serverApi = ServerApi
+                .builder()
+                .version(ServerApiVersion.V1)
+                .build()
+            val mongoSettings = MongoClientSettings
+                .builder()
+                .applyConnectionString(ConnectionString(uri))
+                .serverApi(serverApi)
+                .build()
 
             try {
-//                val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-//                StrictMode.setThreadPolicy(policy)
-                Class.forName("com.mysql.cj.jdbc.Driver")
-                connection = DriverManager.getConnection(
-                    "jdbc:mysql://$address:$port/$name?enabledTLSProtocols=TLSv1.2",
-                    username,
-                    password
-                )
-                Log.d("MyTag", "Success")
-            } catch (e: SQLException) {
-                Log.d("MyTag", "Failed at SQLException. ${e.cause}. ${e.message}\n${e.printStackTrace()}")
-            } catch (e: Exception) {
-                Log.d("MyTag", "Failed at Exception. ${e.cause}. ${e.message}\n${e.printStackTrace()}")
+                val mongoClient = MongoClients.create(mongoSettings)
+                val database = mongoClient.getDatabase("sysadmin_reminder")
+                try {
+                    val command = BsonDocument("ping", BsonInt64(1))
+                    val commandResult = database.runCommand(command)
+                    Log.d("MyTag", "Success")
+                } catch (e: MongoException) {
+                    Log.d("MyTag", e.printStackTrace().toString())
+                }
+            } catch(e: Exception) {
+                Log.d("MyTag", e.printStackTrace().toString())
             }
+
+
+
+//            try {
+//                Class.forName("com.mysql.jdbc.Driver")
+//
+////                val url = "jdbc:mysql://$address:$port/$name"
+//                val url = "jdbc:mysql://ued3rerxb1uk5nhp:wu390qTm3t3rjJoOE1ax@bqpfui1iyw2syeztdsjv-mysql.services.clever-cloud.com:3306/bqpfui1iyw2syeztdsjv"
+//                val user = "ued3rerxb1uk5nhp"
+//                val pass = "wu390qTm3t3rjJoOE1ax"
+//                //connection = DriverManager.getConnection(url, username, password)
+//                connection = DriverManager.getConnection(url, user, pass)
+//                Log.d("MyTag", "Success")
+//            } catch (e: SQLException) {
+//                Log.d("MyTag", "Failed at SQLException. ${e.cause}. ${e.message}\n${e.printStackTrace()}")
+//            } catch (e: Exception) {
+//                Log.d("MyTag", "Failed at Exception. ${e.cause}. ${e.message}\n${e.printStackTrace()}")
+//            }
 
 //            val url = "jdbc:mysql://$address:$port/$name?serverTimezone=UTC"
 //            connection = DriverManager.getConnection(url, connectionProps)
